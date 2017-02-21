@@ -1,0 +1,659 @@
+﻿@model NewRecordlinc.Models.Appointment.CreateAppointment
+@{
+    Layout = "~/Views/Shared/SiteLayoutInner.cshtml";
+    ViewBag.Title = "Appointment";
+}
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link href="~/Content/Appointment/Css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/Appointment/Css/dev-style.css" rel="stylesheet" />
+<link href="~/Content/Appointment/Css/bootstrap.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-1.10.2.js"></script>
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">*@
+@*<script src="~/Content/js/jquery-ui-datepicker.js"></script>*@
+<!-- Lightbox scripts-->
+<script src="~/Content/js/lightbox.js"></script>
+<script src="~/Content/js/lightboxfile.js"></script>
+<link href="~/Content/css/lightbox.css" type="text/css" rel="stylesheet" />
+
+
+@*<link href="~/Content/Appointment/Css/bootstrap.min.css" rel="stylesheet" />*@
+<style>
+    .checkbox {
+        margin-top: 0px;
+    }
+	
+    .appmanucss * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        text-decoration: none;
+    }
+
+    .content {
+        float: left;
+        padding: 0;
+        width: 100%;
+    }
+
+    a:hover, a:focus {
+        text-decoration: none !important;
+    }
+
+    .content_base {
+        padding: 0 2px 0 0 !important;
+    }
+
+    ul.select2-selection__rendered li {
+        margin: 0 0 3px;
+    }
+
+    .select2 {
+        width: 100%;
+        /*margin-bottom: 30px !important;*/
+    }
+    /*Appointmen*/
+
+    .trcursore {
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .active {
+        color: #0890C4 !important;
+        font-weight: bold;
+    }
+
+
+    .ptagforceckle {
+        margin: -2px 0px 0px !important;
+    }
+
+    .cercle-ring {
+        margin-top: 3px !important;
+    }
+
+
+    .modal-content {
+        border-radius: 3px 3px 0px 0px;
+    }
+
+    .modal-dialog {
+        width: 45% !important;
+    }
+
+    #msform {
+        width: 100%;
+        margin: 10px auto 0px;
+        text-align: center;
+        position: relative;
+    }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0px 0px 3px 3px;
+            box-shadow: 0 0 1px 0px rgba(0, 0, 0, 0.4);
+            padding: 20px 15px;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+            #msform fieldset:not(:first-of-type) {
+                display: none;
+            }
+
+        /*#msform input, #msform textarea {
+                padding: 15px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                margin-bottom: 10px;
+                width: 100%;
+                box-sizing: border-box;
+                color: #2C3E50;
+                font-size: 13px;
+                font-family: font-family: Helvetica, Arial, sans-serif;
+            }*/
+
+        #msform .action-button {
+            width: auto;
+            background: transparent;
+            font-weight: bold;
+            color: #0591C5;
+            border: 0px solid #0591C5;
+            border-radius: 1px;
+            cursor: pointer;
+            <!-- padding: 10px 5px; -->
+            margin: 10px 5px;
+            font-size: 17px;
+            font-weight: unset;
+            padding: 0px;
+        }
+
+    .fs-title {
+        font-size: 15px;
+        text-transform: uppercase;
+        color: #0890C4;
+        margin-bottom: 20px !important;
+        text-align: center;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    .fs-subtitle {
+        font-weight: normal;
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 20px;
+        text-align: right;
+    }
+
+    #progressbar {
+        margin-bottom: 10px;
+        overflow: hidden;
+        counter-reset: step;
+        width: 100%;
+        padding: 0px;
+    }
+
+        #progressbar li {
+            list-style-type: none;
+            color: #b2b2b2;
+            font-size: 14px;
+            width: 33.33%;
+            float: left;
+            position: relative;
+        }
+
+            #progressbar li:before {
+                content: counter(step);
+                counter-increment: step;
+                width: 20px;
+                line-height: 18px !important;
+                display: block;
+                font-size: 10px;
+                color: #fff;
+                background: #333;
+                border-radius: 3px;
+                margin: 0 auto 5px auto;
+                z-index: 1;
+                position: relative;
+            }
+
+            #progressbar li:after {
+                content: '';
+                width: 100%;
+                height: 2px;
+                background: #333;
+                position: absolute;
+                left: -50%;
+                top: 7px;
+                z-index: 0;
+            }
+
+            #progressbar li:first-child:after {
+                content: none;
+            }
+
+            #progressbar li.active:before, #progressbar li.active:after {
+                background: #0890C4;
+                color: white;
+            }
+
+    .tbletopdiv {
+        height: 259px !important;
+    }
+
+    .cercle-ring {
+        border-radius: 2px !important;
+    }
+
+    .ptagforceckle {
+        margin: 0px 0px 0px !important;
+    }
+
+    #progressbar li::before {
+        width: 20px !important;
+        line-height: 18px !important;
+        font-size: 12px !important;
+    }
+
+    .blue-text-color {
+        color: #0890C4 !important;
+        font-weight: bold;
+    }
+
+    .devbox7 {
+        margin-left: 7px;
+    }
+
+    @@media (max-width: 600px) {
+        .modal-dialog {
+            width: 90%;
+            margin: 0 auto;
+        }
+    }
+
+    @@media (max-width: 1000px) {
+        .modal-dialog {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        #PatientIdForSearch {
+            width: 100%;
+        }
+
+        .devbox7 {
+            width: 100%;
+            margin-left: 0px;
+            margin-bottom: 5px;
+        }
+
+        #btnSearch {
+            float: right;
+        }
+
+        .devboxstyle {
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            width: 100% !important;
+        }
+
+        .table-bordered {
+            border: 0 solid #ddd !important;
+            padding-left: 0;
+            padding-right: 0 !important;
+            width: 100%;
+        }
+
+        .width10 {
+            float: left;
+            width: 60px !important;
+            border: 0 solid !important;
+        }
+
+        .valigntp {
+            border: 0 solid !important;
+            display: inline;
+            line-height: 23px;
+        }
+
+        #BookAppointmentFormsbmit .col-md-12 {
+            padding: 0 !important;
+            width: 100%;
+        }
+
+        #BookAppointmentFormsbmit .col-md-9 {
+            width: 100%;
+            padding: 0;
+        }
+
+        #BookAppointmentFormsbmit .col-md-3 {
+            padding: 0;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        #msform .action-button {
+            margin-top: 10px;
+            float: left;
+        }
+
+        .devtable-border {
+            width: 100% !important;
+        }
+    }
+
+    .mfp-close {
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        position: absolute;
+        right: -16px;
+        top: -22px;
+        text-decoration: none;
+        text-align: center;
+        text-indent: -9999px;
+        background: url(../../Content/images/close.png) left top no-repeat;
+        border: none;
+        cursor: pointer;
+    }
+
+    .errormsg {
+        color: red;
+        float: left;
+        display: none;
+    }
+
+    .previous {
+        border: 0px solid #0591c5 !important;
+        float: left;
+        <!-- margin: 22px 0 0 !important; -->
+        padding: 0px !important;
+    }
+
+    .next {
+        float: right;
+    }
+
+    .submit {
+        float: right !important;
+        margin: 0px 0;
+        padding: 10px 0 !important;
+    }
+
+    <!-- --24-12-2016---- -->
+    .modal-body {
+        padding: 15px 0 !important;
+        position: relative;
+    }
+
+    #BookAppointmentFormsbmit .col-md-12 {
+        padding: 0px !important;
+    }
+
+    #BookAppointmentFormsbmit .col-md-9 {
+        padding-left: 0px !important;
+    }
+
+    #BookAppointmentFormsbmit .col-md-3 {
+        padding-right: 0px !important;
+    }
+
+    .mfp-close {
+        right: 0px;
+        top: -9px;
+    }
+
+    .submit {
+        padding: 0px !important;
+    }
+
+    .modal-footer {
+        padding: 15px !important;
+    }
+
+
+
+    .fa-user {
+        color: #0890C4;
+        line-height: 0 !important;
+    }
+
+    .fa-phone {
+        color: #0890C4;
+        line-height: 0 !important;
+    }
+
+    .fa-phone {
+        color: #0890C4;
+        line-height: 0 !important;
+    }
+
+    .fa-calendar-o {
+        color: #0890C4;
+        line-height: 0 !important;
+    }
+
+    #BookAppointmentFormsbmit .col-md-12 {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+
+<div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+    top: 0px; width: 100%; height: 100%; background-color: White; z-index: 30001;
+    opacity: 0.5; filter: alpha(opacity=70); display: none">
+    <p style="position: absolute; top: 30%; left: 50%; color: White;">
+        <img src="../../Images/Recordloading.gif">
+    </p>
+</div>
+
+<div class="content">
+    <div id="add_team_members" class="mfp-hide white-popup-block">
+    </div>
+    <div class="content_base appmanucss">
+        <div class="modal-body">
+            <div>
+                <input type="hidden" id="PaintId" name="PaintId" value="0">
+                <input type="hidden" id="hdserviceId" name="hdserviceId" value="0">
+                <input type="hidden" id="hdserviceName" name="hdserviceName" value="">
+                <input type="hidden" id="hdTheatreId" name="hdTheatreId" value="0">
+                <input type="hidden" id="hdTheatreName" name="hdTheatreName" value="">
+                <input type="hidden" id="hddentistId" name="hddentistId" value="0">
+                <input type="hidden" id="hddentistName" name="hddentistName" value="">
+                <input type="hidden" id="hdFromtime" name="hdFromtime" value="0">
+                <input type="hidden" id="hdLocationName" name="hdLocationName" value="">
+                <input type="hidden" id="hdRenderName" name="hdRenderName" value="">
+                <input type="hidden" id="hdPaintname" name="hdPaintname" value="">
+                <input type="hidden" id="hdCalenderView" name="hdCalenderView" value="">
+                <input type="hidden" id="hdStep" name="hdStep" value="0">
+                <input type="hidden" id="hdAppointmentlength" name="hdAppointmentlength" value="0">
+                <input type="hidden" id="hdAppointmentTime" name="hdAppointmentTime" value="">
+                <input type="hidden" id="hdstep2location" name="hdstep2location" value="0">
+                <input type="hidden" id="hdselectedtime" name="hdselectedtime" value="0">
+                <input type="hidden" id="hdfirsttimeload" name="hdselectedtime" value="true">
+                <input type="hidden" id="hdAppointmentId" name="hdAppointmentId" value="0">
+                <input type="hidden" id="hdnote" name="hdnote" value="">
+                <input type="hidden" id="hdmode" name="hdmode" value="0">
+                <input type="hidden" id="hdselecteddate" name="hdselecteddate" value="">
+                <input type="hidden" id="hdtempselecteddate" name="hdtempselecteddate" value="">
+
+                @Html.HiddenFor(m => m.locationId, new { @readonly = "readonly", @id = "ddlselectedLocationId" })
+                @Html.HiddenFor(m => m.DoctorId, new { @readonly = "readonly", @id = "ddlselectedDentistId" })
+                @Html.DropDownListFor(m => m.locationId, new SelectList(Model.locationList, "locationId", "locationName"), new { @style = "width:25%", @id = "ddlLocation", onchange = "BinIndexdDentist()" })
+                <select id="ddlDentist" style="width:25%" name="ddlDentist"></select>
+                @*@Html.DropDownListFor(m => m.DoctorId, new SelectList(Model.DentistListCustom, "UserId", "FullName"),new { @style = "width:25%", @id = "ddlDentist" })*@
+                <a id="btnSearchAppointment" href="javascript:;"> <img src="~/Content/Images/submit_btn@2x.png" style="width:auto;height:40px;cursor:pointer;margin-top: -2px;" onclick="GetAppointmentDetails();" /> </a>
+                <a id="btnAddTeamMembers" style="display:none;" href="#add_team_members" onclick="EditTeamMemberDetailsById('@Model.ParentUserId','0')" class="edit popup-with-form showlightbox"> <img src="~/Content/Images/AddTeamMembercopy.png" style="width:auto;height:40px;cursor:pointer;margin-top: -2px;" /> </a>
+                @if (Model.lstLocationForSync.Count > 0)
+                {
+                    <img src="~/Images/syync.png" alt="Alternate Text" style="cursor:pointer;margin-top:-2px;" onclick="SyncNow();" id="dentrixsyncbtn" />
+                }
+            </div>
+            @*<br />*@
+
+
+        </div>
+        @*<br />*@
+
+    </div>
+
+    <div class="content_base appmanucss">
+        <div class="inner">
+            @*<hr>*@
+            <div id="dyncamicloadContenet">
+
+            </div>
+            <div id="dvloading" style="height:400px; width:100%; vertical-align:middle; text-align:center;padding-top:11%">
+                <h1 style="color:#d5cbcb">Loading...</h1>
+            </div>
+            <div id="dvnodoctor" style="height:400px; width:100%; vertical-align:middle; text-align:center;padding-top:11%;display:none;">
+                <h1 style="color:#d5cbcb">No providers available at selected location</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modelsynclocationview" data-keyboard="true" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:600px;">
+        <div class="modal-content" id="modelsynclocationviewbody">
+            <div class="modal-header">
+                <h4 style="margin-top:10px;color:#0691c5;">Choose Location for Sync Dentrix</h4>
+            </div>
+            <div class="modal-body" id="lstlocation">
+                @foreach (var item in Model.lstLocationForSync)
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="@item.LocationId" name="checklocation" checked />
+                                    @item.LocationName
+                                </label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @item.ProcessDate
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="submit" class="btn btn-primary" onclick="GetCheckboxId();">Sync Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="~/Content/css/select2.min.css" rel="stylesheet" />
+<script src="~/Scripts/ControllerJS/TeamMember.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#hdLocationName").val($("#ddlLocation :selected").text());
+        LoadViewAppointment();
+        BinIndexdDentist();
+    });
+    function BinIndexdDentist() {
+        var LocationId = $("#ddlLocation").val();
+        var ddlDentistlst = $("[id*=ddlDentist]");
+        if (LocationId) {
+            $.ajaxSetup({ async: false });
+            $.ajax({
+                url: "/Appointment/GetDentistList?LocationId=" + LocationId,
+                type: "GET",
+                success: function (data) {
+                    if (data != '') {
+                        if (data.DentistListCustom.length > 0) {
+                            ddlDentistlst.empty();
+                            ddlDentistlst.append($("<option></option>").val(0).html("All"));
+                            $.each(data.DentistListCustom, function () {
+                                if (this['UserId'] === parseInt($("#ddlselectedDentistId").val())) {
+                                    ddlDentistlst.append($("<option selected='selected'></option>").val(this['UserId']).html(this['FullName']));
+                                } else {
+                                    ddlDentistlst.append($("<option></option>").val(this['UserId']).html(this['FullName']));
+                                }
+                                $("#dvnodoctor").hide();
+                                $("#btnAddTeamMembers").hide();
+                                $("#btnSearchAppointment").show();
+                            });
+                        }
+                        else {
+                            ddlDentistlst.empty().append('<option selected="selected" value="">No Providers Found</option>');
+                            $("#dyncamicloadContenet").empty();
+                            $("#dvnodoctor").show();
+                            $("#btnSearchAppointment").hide();
+                            $("#btnAddTeamMembers").show();
+                        }
+                    }
+                    else {
+                        ddlDentistlst.empty().append('<option selected="selected" value="">No Providers Found</option>');
+                        $("#dvnodoctor").show();
+                        $("#btnSearchAppointment").hide();
+                        $("#btnAddTeamMembers").show();
+                    }
+                },
+                error: function (response, status, xhr) {
+                    if (response.status == 403) {
+                        SessionExpire(response.responseText)
+                    }
+                }
+            });
+            $.ajaxSetup({ async: true });
+        }
+        else {
+            ddlDentistlst.empty().append('<option selected="selected" value="">No Providers Found</option>');
+            $("#dyncamicloadContenet").empty();
+            $("#dvnodoctor").show();
+        }
+    }
+    function GetAppointmentDetails() {
+        var ddllocation = $("#ddlLocation").val();
+        $("#hdLocationName").val($("#ddlLocation :selected").text());
+        var DoctorId = $("#ddlDentist").val();
+        if (DoctorId != '' && DoctorId != null) {
+            $("#hdfirsttimeload").val("false")
+            if ($("#hdtempselecteddate").val()) { $("#hdselecteddate").val($("#hdtempselecteddate").val()) }
+            $("#hdfirsttimeload").val("false")
+
+            LoadViewAppointment();
+        }
+    }
+    function LoadViewAppointment() {
+        var url = '@Url.Action("ViewAppointment", "Appointment")';
+        $("#dvloading").show();
+        $('#dyncamicloadContenet').load(url, function (response, status, xhr) {
+            if (xhr.status == 403) {
+                SessionExpire(xhr.responseText)
+            }
+        });
+    }
+
+    function ClearHiddenFileds() {
+        $("#PaintId").val(0);
+        $("#hdserviceId").val(0);
+        $("#hdserviceName").val("");
+        //$("#hdTheatreId").val(0);
+        $("#hdTheatreName").val("");
+        $("#hddentistId").val(0);
+        $("#hddentistName").val("");
+        //$("#hdFromtime").val("0");
+        $("#hdRenderName").val("");
+        $("#hdPaintname").val("");
+        $("#hdstep2location").val("");
+        //$("#hdCalenderView").val("");
+    }
+    function SyncNow() {
+        $("#modelsynclocationview").modal('show');
+    }
+    function GetCheckboxId() {
+        var selected = [];
+        $('#lstlocation input:checked').each(function () {
+            selected.push($(this).attr('id'));
+        });
+        if (selected.length > 0) {
+            $.post("Appointment/SyncAppointmentNow", { LocationId: selected }, function (data) {
+                if (data) {
+                    //swal({ title: "", text: 'Your sync is in process' });
+                    swal({
+                        title: "",
+                        text: "Your sync is in process",
+                        timer: 3500,
+                        showConfirmButton: false
+                    });
+                    window.location = document.URL;
+                }
+                else {
+                    swal({ title: "", text: 'Faild to sync' });
+                }
+            });
+        }
+        else {
+            swal({ title: "", text: 'Please select at-least one location' });
+        }
+    }
+    function SessionExpire(responseText) {
+        var response = $.parseJSON(responseText);
+        window.location = response.LogOnUrl;
+    }
+    //function lbllocationclick(id) {
+    //    if($('#' + id).is(':checked') == true)
+    //    {
+    //        $("#"+id).attr('checked',false);
+    //    }
+    //    else{
+    //        $("#"+id).attr('checked',true);
+    //    }
+
+</script>

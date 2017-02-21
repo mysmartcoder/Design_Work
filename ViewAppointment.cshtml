@@ -1,0 +1,867 @@
+﻿
+
+<link href="/Content/EventCalender/lib/fullcalendar.min.css" rel="stylesheet" />
+<link href="/Content/EventCalender/scheduler.css" rel="stylesheet" />
+<style>
+    body {
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        font-size: 14px;
+    }
+
+    #calendar {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .fc-button-group {
+        margin-left: 10px;
+    }
+
+    .dayslot {
+        float: left;
+        margin-left: 2px;
+    }
+
+    .fc-agenda-slots .unavailable {
+        background-color: #e6e6e6;
+    }
+
+    .fc-time-grid-container {
+        height: 200px;
+    }
+
+    .timeline {
+        position: absolute;
+        border-top: 2px dashed red;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: 999;
+    }
+
+    .fc-time-grid .fc-slats td {
+        height: 3.6em;
+    }
+
+    .fc-content {
+        padding: 3px 0px 0px 5px !important;
+    }
+
+    .fc-view-month .fc-title {
+        padding: 0px !important;
+    }
+
+    .fc-toolbar .fc-state-active, .fc-toolbar .ui-state-active {
+        z-index: 2;
+    }
+
+    .modal-footer {
+        padding: 12px 15px 0 0;
+    }
+
+    .devprofile {
+        display: inline;
+    }
+
+    @@media only screen and (max-width: 800px) {
+        .fc-button-group {
+            margin-left: -155px !important;
+        }
+
+        .fc-next-button {
+            margin-left: 19em !important;
+        }
+
+        .fc .fc-toolbar > * > *:first-child {
+            margin-left: -15em;
+            margin-top: -28px;
+        }
+
+        .fc-today-button {
+            margin-left: 38% !important;
+        }
+
+        .fc .fc-toolbar > * > * {
+            margin-top: -2em;
+        }
+
+        th {
+            padding: 10px !important;
+        }
+    }
+
+
+
+    /*.fc-event { height: 50px !important; }*/
+</style>
+
+<div style="padding: 11px 1px 0 0;">
+    <div id='calendar'></div>
+</div>
+<div id="divschedule" style="display:none;height:400px; width:100%; vertical-align:middle; text-align:center;padding-top:11%">
+    <h1 style="color:#d5cbcb">No schedule available at moment.</h1>
+</div>
+@*<div id="divschedule" style="display:none;height:400px; width:100%; vertical-align:middle; text-align:center;padding-top:20%">
+        <h1 style="color:#d5cbcb">No Operatory avalible at selected location.</h1>
+    </div>*@
+
+@*<a href="#appBookingPopup" title="Appointment Booking" class="frmreferpatients edit popup-with-form showlightbox"
+         id="appBookingPopupclick" style="display: none;"></a>
+    <div id="appBookingPopup" style="max-width: 700px;" class="mfp-hide white-popup-block">
+
+    </div>
+
+    <a href="#appcancelandviewPopup" title="Appointment Booking" class="frmreferpatients edit popup-with-form showlightbox"
+       id="appcancelandviewPopupclick" style="display: none;"></a>
+    <div id="appcancelandviewPopup" style="max-width: 700px;" class="mfp-hide white-popup-block">
+
+    </div>*@
+
+
+
+
+<div class="modal fade" id="modelbookedappdetailsview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modelbookedappdetailsviewbody">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modelbookappointment" data-keyboard="true" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modelbookappointmentbody">
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Content/EventCalender/lib/moment.min.js"></script>
+<script type="text/javascript" src="~/Content/EventCalender/lib/jquery.min.js"></script>
+@*
+    <script src="~/Content/EventCalender/fullcalendar.js"></script>*@
+<script type="text/javascript" src="~/Content/EventCalender/lib/fullcalendar.min.js"></script>
+<script type="text/javascript" src="~/Content/EventCalender/scheduler.min.js"></script>
+@*
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>*@
+
+<script src="~/Content/Appointment/Js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function getParameterByName(name, url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+    var now, LocationId, DoctorId, MasterEventList = [], MasterDates = [], updateflag = 0;
+    var intialscrollTime = '';
+
+    function BindCalenderView() {
+        var defaultFromDate = GetFromDate(now, true);
+        var defaultToDate = GetToDate(now, true);
+        var MasterAppList = GetAppointmentdataForCalendar(defaultFromDate, defaultToDate, DoctorId, LocationId);
+        MasterEventList = GetEventDataList(MasterAppList, true, now.getMonth());
+        var ResourceList = GetOprationTheatorForCalendar(LocationId);
+        var WeekSchedule = GetWeekSheduleData(DoctorId, LocationId);
+        $("#dvloading").hide();
+        if (ResourceList.length > 0) {
+            $("#divschedule").hide();
+            if (WeekSchedule.length > 0) {
+                $("#divschedule").hide();
+                var OffDays = [];
+                $(WeekSchedule).each(function () {
+                    if (this.IsOffDay === "Y") {
+                        OffDays.push((this.Day != 6) ? this.Day + 1 : 0);
+                    }
+                });
+                var IsEditble = false;
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: '',
+                        center: 'prev,title,next',
+                        right: 'today,month,agendaWeek,agendaDay'
+                    },
+                    //weekends: false, //if wants to diable weekend
+                    // defaultDate: '2016-03-04',
+                    eventDurationEditable: false,
+                    defaultView: 'agendaDay', // set default view type
+                    slotDuration: '00:15:00',
+                    //slotLabelFormat: "HH:mm", //uncomment it if want to show in 24 hour formate
+                    selectable: true,
+                    selectHelper: true,
+                    minTime: getMinTime(getBusinessHours(WeekSchedule)),
+                    maxTime: getMaxTime(getBusinessHours(WeekSchedule)),
+                    scrollTime: intialscrollTime,
+                    allDaySlot: false,
+                    businessHours: getBusinessHours(WeekSchedule),
+                    resources: ResourceList,
+                    displayEventTime: false,
+                    slotEventOverlap: false,
+                    eventClick: function (calEvent, jsEvent, view) {
+                        $('#divLoading').show();
+                        $("#hdAppointmentId").val('0');
+                        $("#modelbookedappdetailsviewbody").load("/Appointment/ViewDetailsForBookedAppointment?AppointmentId=" + calEvent.id, function (response, status, xhr) {
+                            if (xhr.status == 403) {
+                                SessionExpire(xhr.responseText)
+                            }
+                            $('#divLoading').hide();
+                            //alert(moment(calEvent.start).format('h:mm:ss a'));
+                            var selecteddatetime = moment(calEvent.start.format());
+                            var currentdatetime = moment();
+                            if (selecteddatetime < currentdatetime) { $("#btncancel").hide(); $("#btnedit").hide(); $("#btnchangestatus").hide(); $("#viewappointmentfooter").hide(); } else { $("#btncancel").show(); $("#btnedit").show(); $("#btnchangestatus").show(); }
+                            $('#modelbookedappdetailsview').modal('show');
+                        });
+                    },
+                    dayClick: function (date, jsEvent, view, resourceObj) {
+                        var $element = $('#calendar');
+                        var currentView = $element.fullCalendar('getView').name;
+                        var businessHours = $element.fullCalendar('option', 'businessHours');
+                        var isValidTime = false;
+                        if (businessHours && (currentView === 'agendaWeek' || currentView === 'agendaDay')) {
+                            var currentTime = timeToFloat(date.format("HH:mm"));
+                            //var businessHours = getBusinessHours(WeekSchedule);
+                            var currentDay = date.day();
+                            $.each(businessHours, function (index, item) {
+
+                                if (currentTime >= timeToFloat(item.start) && currentTime < timeToFloat(item.end) && currentDay == item.dow[0]) {
+                                    isValidTime = true;
+                                }
+                            });
+                        }
+
+                        if (currentView === 'agendaDay') {
+                            if (parseInt(resourceObj.id) > 0)
+                                $("#hdCalenderView").val('agendaDay');
+                            $("#hdTheatreId").val(parseInt(resourceObj.id))
+                        }
+                        if (currentView === 'agendaWeek' || currentView === 'agendaDay') {
+                            var selecteddatetime = moment(date.format());
+                            var currentdatetime = moment();
+                            if (selecteddatetime < currentdatetime) {
+                                isValidTime = false;
+                                swal({ title: "", text: 'Sorry,This time is past please select future time.' });
+                                return false;
+                            }
+                            if (isValidTime) {
+                                $('#divLoading').show();
+                                $('#hdFromtime').val(date.format());
+                                $('#modelbookappointment').modal('show');
+                                $("#modelbookedappdetailsviewbody").empty();
+                                $("#hdAppointmentId").val('0');
+                                $("#hdmode").val("0");
+                                $("#ddlselectedDentistId").val("");
+                                $("#modelbookappointmentbody").load("/Appointment/BookAppointment?CalFromTime=" + date.format(), function (response, status, xhr) {
+                                    if (xhr.status == 403) {
+                                        SessionExpire(xhr.responseText)
+                                    }
+                                    $("#hdselectedtime").val(date.format('hh:mm A'));
+                                    $('#divLoading').hide();
+                                });
+
+                            }
+                            else {
+                                swal({ title: "", text: 'Sorry,Provider is not available at selected time.' });
+                                $('#calendar').fullCalendar('unselect');
+                                return false;
+                            }
+                        } else if (currentView === "month") {
+                            if (trancatetime(date) < trancatetime(now)) {
+                                isValidTime = false;
+                                swal({ title: "", text: 'Sorry,This time is past please select future time.' });
+                                return false;
+                            }
+                            //trancatetime
+                            $('#divLoading').show();
+                            $('#hdFromtime').val(date.format());
+                            $('#modelbookappointment').modal('show');
+                            $("#modelbookedappdetailsviewbody").empty();
+                            $("#hdAppointmentId").val('0');
+                            $("#hdmode").val("0");
+                            $("#ddlselectedDentistId").val("");
+                            $("#modelbookappointmentbody").load("/Appointment/BookAppointment?CalFromTime=" + date.format(), function (response, status, xhr) {
+                                if (xhr.status == 403) {
+                                    SessionExpire(xhr.responseText)
+                                }
+
+                                $("#hdselectedtime").val(date.format('hh:mm A'));
+                                $('#divLoading').hide();
+                            });
+                        }
+
+                    },
+                    select: function (start, end, date) {
+                        if (moment().diff(start, 'days') > 0) {
+                            $('#calendar').fullCalendar('unselect');
+                            return false;
+                        }
+                        else {
+                            $('#calendar').fullCalendar('unselect');
+                        }
+                    },
+                    dayRender: function (date, cell) {
+                        RenderData(date);
+                    },
+                    editable: IsEditble,//Not allow to edit
+                    viewRender: (function (currentview) {
+                        var lastViewName;
+                        return function (view, element) {
+                            if (view.name === 'agendaDay') {
+                                $("#hdtempselecteddate").val(new Date(view.start));
+                                var calendarOptions = $('#calendar').fullCalendar('getView').options;
+                                calendarOptions.editable = true;
+                                $('#calendar').fullCalendar(calendarOptions);
+
+                            }
+                            if (view.name !== 'agendaDay') {
+                                $("#hdCalenderView").val('');
+                                $("#hdTheatreId").val(0);
+                            }
+                            if (view.name === 'agendaDay' || view.name === 'agendaWeek') {
+                                RenderData(view.start.format());
+                            }
+                            lastViewName = view.name;
+                        }
+                    })(),
+                    eventLimit: true, // allow "more" link when too many events
+                    views: {
+                        agenda: {
+                            eventLimit: 6 // adjust to 6 only for agendaWeek/agendaDay
+                        }
+                    },
+                    events: MasterEventList,
+                    hiddenDays: OffDays,
+
+                    eventDrop: function (event, delta, revertFunc) {
+                        if (new Date(event.start._i) < now) {
+                            swal({ title: "", text: 'Sorry,You can not drag appointment at past time.' });
+                            revertFunc();
+                            return false;
+                        }
+                        var FromTime = event.start.format('HH:mm:ss');
+                        var ResourceId = event.resourceId;
+                        swal({
+                            title: "",
+                            text: "Are you sure to change appointment Schedule?",
+                            type: "warning",
+                            showCancelButton: true,
+                            //confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes, Move it!",
+                            cancelButtonText: "No, Thanks",
+                            closeOnConfirm: false,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                UpdateAppointmentForCalender(event.id, ResourceId, event.start.format(), FromTime);
+                                if (updateflag > 0) { revertFunc(); }
+                                updateflag = 0;
+                            } else {
+                                revertFunc();
+                                isConfirm = false;
+                            }
+                        });
+                        //if (!confirm("Are you sure about this change?")) {
+                        //} else {
+                        //}
+                    }
+                });
+                if ($("#hdselecteddate").val()) {
+                    $('#calendar').fullCalendar('gotoDate', new Date($("#hdselecteddate").val()));
+                } else {
+                    $('#calendar').fullCalendar('gotoDate', now);
+                }
+
+            }
+            else {
+                if ($("#ddlDentist").val()) {
+                    $("#divschedule h1").empty();
+                    $("#divschedule h1").html("No schedule available at moment.");
+                    $("#divschedule").show();
+                }
+            }
+        } else {
+            if ($("#ddlDentist").val()) {
+                $("#divschedule h1").empty();
+                $("#divschedule h1").html("No Operatory available at selected location.");
+                $("#divschedule").show();
+            }
+
+        }
+
+        setTimeout(function () {
+            $('#calendar').fullCalendar('option', 'height', 1000)
+            // $('#calendar').fullCalendar('render');
+        }, 0);
+    }
+    $(document).ready(function () {
+        if (getParameterByName('AppointmentId') && $("#hdfirsttimeload").val() == "true") {
+            if (parseInt(getParameterByName('AppointmentId')) > 0) {
+                var AppointmentId = getParameterByName('AppointmentId');
+                $.ajaxSetup({ async: false });
+                $.ajax({
+                    url: "/Appointment/GetSingleAppointmentData?AppointmentId=" + AppointmentId,
+                    type: "GET",
+                    success: function (data) {
+                        if (data != "") {
+                            $("#ddlLocation").val(data.LocationId);
+                            BinIndexdDentist();
+                            $("#ddlDentist").val(data.DoctorId);
+                            intialscrollTime = data.AppointmentTime;
+                            now = new Date(data.strAppointmentDate);
+                            LocationId = $("#ddlLocation").val();
+                            if (LocationId == "" || LocationId == null) {
+                                LocationId = 0;
+                            }
+                            DoctorId = $("#ddlDentist").val();
+                            if (DoctorId == '' || DoctorId == null) {
+                                DoctorId = 0;
+                            } else {
+                                DoctorId = $("#ddlDentist").val();
+                            }
+                            BindCalenderView();
+                        } else {
+                            swal({
+                                title: "",
+                                text: "Sorry ,No appointment found.",
+                                type: "error",
+                            }, function () {
+                                setTimeout(function () {
+                                    window.location.href = window.location.protocol + '//' + window.location.host + window.location.pathname;
+                                }, 100)
+                            });
+                        }
+                    },
+                    error: function (response, status, xhr) {
+                        if (response.status == 403) {
+                            SessionExpire(response.responseText)
+                        }
+                    }
+                });
+                $.ajaxSetup({ async: true });
+
+            } else {
+                swal({
+                    title: "",
+                    text: "Sorry ,No appointment found.",
+                    type: "error",
+                }, function () {
+                    setTimeout(function () {
+                        window.location.href = window.location.protocol + '//' + window.location.host + window.location.pathname;
+                    }, 100)
+                });
+            }
+        }
+        else {
+            LocationId = $("#ddlLocation").val();
+            if (LocationId == "" || LocationId == null) {
+                LocationId = 0;
+            }
+            DoctorId = $("#ddlDentist").val();
+            if (DoctorId == '' || DoctorId == null) {
+                DoctorId = 0;
+            } else {
+                DoctorId = $("#ddlDentist").val();
+            }
+            intialscrollTime = '09:00:00'
+            now = new Date();
+            BindCalenderView();
+        }
+
+        if ($("#hdfirsttimeload").val() == "true" && getParameterByName('PatientId')) {
+            if (parseInt(getParameterByName('PatientId')) > 0) {
+                var PatientId = getParameterByName('PatientId');
+                var FromTime = moment().format("MM/DD/YYYY");
+                var ddLocationId = $("#ddlLocation").val();
+                $('#divLoading').show();
+                $("#modelbookedappdetailsviewbody").load("/Appointment/CreateAppointmentTimeSlotView?PatientId=" + PatientId + "&CalndFromTime=" + FromTime + "&LocationId=" + ddLocationId, function (response, status, xhr) {
+                    if (xhr.status == 403) {
+                        SessionExpire(xhr.responseText)
+                    }
+                    $('#divLoading').hide();
+                    $("#ui-datepicker-div").remove();
+                    $("#btnPrevStep1").hide();
+                    $("#PaintId").val(PatientId);
+                    $("#hdStep").val("2");
+                    $("#hdmode").val("1");
+                    if (FromTime) { $("#hdFromtime").val(FromTime); }
+                    $('#modelbookedappdetailsview').modal('show');
+                });
+            }
+
+        }
+    });
+    function UpdateAppointmentForCalender(AppointmentId, ResourceId, CurrentDate, FromTime) {
+        var objCreateAppointment = {};
+        objCreateAppointment.CurrentDate = CurrentDate.trim();
+        objCreateAppointment.FromTime = FromTime.trim();
+        objCreateAppointment.AppointmentId = AppointmentId;
+        objCreateAppointment.ApptResourceId = ResourceId;
+        $.ajaxSetup({ async: false });
+        $.ajax({
+            url: "/Appointment/UpdateAppointmentForCalender",
+            type: "post",
+            async: false,
+            data: objCreateAppointment,
+            success: function (data) {
+                if (data != "") {
+                    $(".showSweetAlert").hide();
+                    $(".sweet-overlay").hide();
+                    swal("", data, "error");
+                    //alert(data);
+                    updateflag = 1;
+                }
+                else {
+                    swal("", "Appointment Dragged Successfully", "success");
+                    updateflag = 0;
+                }
+
+            },
+            error: function (response, status, xhr) {
+                if (response.status == 403) {
+                    SessionExpire(response.responseText)
+                }
+            }
+        });
+        $.ajaxSetup({ async: true });
+    }
+    function RenderData(date) {
+        var renderDate = new Date(date);
+        if (!isDateExists(MasterDates, "FromDateTime", renderDate)) {
+            var LocationId = $("#ddlLocation").val();
+            if (LocationId == "" || LocationId == null) {
+                LocationId = 0;
+            }
+            var DoctorId = $("#ddlDentist").val();
+            if (DoctorId == '' || DoctorId == null) {
+                DoctorId = 0;
+            } else {
+                DoctorId = $("#ddlDentist").val();
+            }
+            currentMonth = renderDate.getMonth();
+            var fromDate = GetFromDate(renderDate);
+            var toDate = GetToDate(renderDate);
+            var eventList = GetEventDataList(GetAppointmentdataForCalendar(fromDate, toDate, DoctorId, LocationId), false, currentMonth);
+            $.each(eventList, function (index, item) {
+                MasterEventList.push(item);
+            });
+            $.each(MasterEventList, function (index, item) {
+                if (!item.isProcessed) {
+                    $('#calendar').fullCalendar('renderEvent', item, true);
+                    item.isProcessed = true;
+                }
+            });
+        }
+    }
+    function getMaxTime(businessHours) {
+        var returnValue = '';
+        if (businessHours) {
+            var maxTime = 0;
+            var currentTime = 0
+            $.each(businessHours, function (index, item) {
+                currentTime = timeToFloat(item.end);
+                if (maxTime < currentTime) {
+                    maxTime = currentTime;
+                    returnValue = item.end;
+                }
+            });
+        }
+        return returnValue;
+    }
+    function getMinTime(businessHours) {
+
+        var returnValue = '';
+        if (businessHours) {
+            var minTime = 5000;
+            var currentTime = 0;
+            $.each(businessHours, function (index, item) {
+                currentTime = timeToFloat(item.start);
+                if (minTime > currentTime) {
+                    minTime = currentTime;
+                    returnValue = item.start;
+                }
+            });
+        }
+        return returnValue;
+    }
+    function getBusinessHours(weekSchedule) {
+        var businessHours = [];
+        if (weekSchedule) {
+            var copyWeekSchedule = JSON.parse(JSON.stringify(weekSchedule));
+            $.each(copyWeekSchedule, function (index, item) {
+                var newBusinessHour;
+                if (item.MorningFromTime && item.MorningToTime) {
+                    newBusinessHour = {
+                        dow: [(parseInt(item.Day) + 1) != 7 ? (parseInt(item.Day) + 1) : 0],
+                        start: item.MorningFromTime.Hours + ":" + item.MorningFromTime.Minutes,
+                        end: item.MorningToTime.Hours + ":" + item.MorningToTime.Minutes
+                    };
+                    businessHours.push(newBusinessHour);
+                }
+                if (item.EveningFromTime && item.EveningToTime) {
+                    newBusinessHour = {
+                        dow: [(parseInt(item.Day) + 1) != 7 ? (parseInt(item.Day) + 1) : 0],
+                        start: item.EveningFromTime.Hours + ":" + item.EveningFromTime.Minutes,
+                        end: item.EveningToTime.Hours + ":" + item.EveningToTime.Minutes
+                    };
+                    businessHours.push(newBusinessHour);
+                }
+            });
+        }
+        else {
+            //alert("Error in fetching business hours.");
+            swal({ title: "", text: 'Error in fetching business hours', type: 'error' });
+        }
+        return businessHours;
+    }
+    function truncateTime(date) {
+        var cDate = new Date(+date);
+        var newDate = new Date(cDate.getFullYear(), cDate.getMonth(), cDate.getDate(), 0, 0, 0, 0);
+        return newDate;
+    }
+
+    function processDates(fromDate, toDate) {
+        for (var d = truncateTime(fromDate) ; d <= truncateTime(toDate) ; d.setDate(d.getDate() + 1)) {
+            if (!isDateExists(MasterDates, "FromDateTime", d)) {
+                MasterDates.push({ FromDateTime: new Date(+d) });
+            }
+        }
+    }
+    /** Gets the starting date of specified month **/
+    function GetFromDate(now, isFirstDay) {
+        if (isFirstDay) {
+            var first_day = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+            return getFirstDayOfWeek(first_day);
+        }
+        else {
+            return getFirstDayOfWeek(new Date(+now));
+        }
+
+    }
+    /**
+    * Helper function: Converts a given time to a float, e.g. '8:15' becomes 8.25
+    * @@param mixed time A integer, float or a string. Valid strings: '8:15', '20:15', '8:15am', '8:15pm', '8.15', etc.
+    * @@return float
+    **/
+    function timeToFloat(time) {
+        var returnValue, timeAsArray, separator, i, timeSeparators = [':', '.'], numberOfSeparators;
+
+        /* is time an integer or a float? */
+        if (parseInt(time, 10) === time || parseFloat(time) === time) {
+            returnValue = time;
+        } else {
+            /* time will be considered a string, parse it */
+            time = time.toString();
+
+            numberOfSeparators = timeSeparators.length;
+
+            for (i = 0; i < numberOfSeparators; i = i + 1) {
+                separator = timeSeparators[i];
+
+                if (time.indexOf(separator) > 0) {
+                    timeAsArray = time.split(separator);
+
+                    returnValue = parseInt(timeAsArray[0], 10) + parseInt(timeAsArray[1], 10) / 60;
+
+                    /* does string contain 'p' or 'pm'? */
+                    if (time.indexOf('p') > 0 && returnValue <= 12) {
+                        returnValue = returnValue + 12;
+                    }
+                }
+            }
+        }
+        return returnValue;
+    }
+    /** Gets the ending date of specified month **/
+    function GetToDate(now, isLastDay) {
+        if (isLastDay) {
+            var last_day = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+            return getLastDayOfWeek(last_day);
+        }
+        else {
+            return getLastDayOfWeek(new Date(+now));
+        }
+
+    }
+    /** Converts ajax object to Event object required by calendar **/
+    function GetEventDataList(AjaxApplist, _isProcessed, month) {
+        _isProcessed = _isProcessed ? true : false;
+        var EventDataList = [];
+        $.each(AjaxApplist, function (index, item) {
+            var eventData = new Object();
+            var EventTitle = "";
+            if (item.PatientName) { EventTitle += item.PatientName + " \n" }
+            if (item.ServiceName) { EventTitle += item.ServiceName + " \n" }
+            if (item.PatientsPhone) { EventTitle += item.PatientsPhone + " \n" }
+            if (item.DoctorName) { EventTitle += "Dr. " + item.DoctorName + " \n" }
+            eventData.title = EventTitle;
+            eventData.backgroundColor = item.EventBackgroundColor;
+            eventData.textColor = item.EventTextColor
+            eventData.borderColor = item.EventBorderColor
+            eventData.start = item.FromDateTime;
+            eventData.end = item.ToDateTime;
+            eventData.id = item.AppointmentId;
+            eventData.isProcessed = _isProcessed;
+            eventData.ForMonth = month;
+            eventData.FromDateTime = new Date(item.FromDateTime);
+            eventData.resourceId = item.ApptResourceId.toString();
+            EventDataList.push(eventData);
+        });
+        return EventDataList;
+    }
+    /**
+     * Given a Date, return a new Date object for the first
+     * day of the week.
+     * @@param {Date} date - date object
+     * @@param {boolean} mon - true if week starts on Monday, otherwise starts on Sunday
+     */
+    function getFirstDayOfWeek(date, mon) {
+
+        // copy date object
+        date = new Date(+date);
+
+        if (mon) {
+            date.setDate(date.getDate() - (date.getDay() || 7) + 1);
+
+        } else {
+            date.setDate(date.getDate() - date.getDay());
+        }
+        return date;
+    }
+    /**
+     * Given a Date, return a new Date object for the last
+     * day of the week.
+     * @@param {Date} date - date object
+     * @@param {boolean} mon - true if week starts on Monday, otherwise starts on Sunday
+     */
+    function getLastDayOfWeek(date, mon) {
+
+        var local_date = getFirstDayOfWeek(new Date(+date), mon);
+        local_date.setDate(local_date.getDate() + 6);
+        return local_date;
+    }
+
+    /** Fetch event data from db using ajax call **/
+    function GetAppointmentdataForCalendar(FromDate, ToDate, DoctorId, LocationId) {
+        var datalist;
+        $("#divLoading").show();
+        $.ajaxSetup({ async: false });
+        $.ajax({
+            url: "/Appointment/GetBookedAppointmentForCalendar",
+            type: "post",
+            async: false,
+            data: {
+                strFromDate: GetStringDateFormat(FromDate, true),
+                strToDate: GetStringDateFormat(ToDate),
+                UserId: DoctorId,
+                LocationId: LocationId
+            },
+            success: function (data) {
+                $("#divLoading").hide();
+                datalist = data;
+                processDates(FromDate, ToDate);
+            },
+            error: function (response, status, xhr) {
+                if (response.status == 403) {
+                    SessionExpire(response.responseText)
+                }
+            }
+        });
+        $.ajaxSetup({ async: true });
+
+        return datalist;
+    }
+
+    /** Fetch event data from db using ajax call **/
+    function GetOprationTheatorForCalendar(LocationId) {
+        var datalist;
+        $("#divLoading").show();
+        $.ajaxSetup({ async: false });
+        $.ajax({
+            url: "/Appointment/GetOprationTheatorForCalendarByLocation",
+            type: "post",
+            async: false,
+            data: {
+                LocationId: LocationId
+            },
+            success: function (data) {
+                $("#divLoading").hide();
+                datalist = data;
+            },
+            error: function (response, status, xhr) {
+                if (response.status == 403) {
+                    SessionExpire(response.responseText)
+                }
+            }
+        });
+        $.ajaxSetup({ async: true });
+        return datalist;
+    }
+    /** Returns custom date format as string */
+    function GetStringDateFormat(dateObj, isFromTime) {
+        var y = dateObj.getFullYear();
+        var m = dateObj.getMonth() + 1;
+        var d = dateObj.getDate();
+        var hh = dateObj.getHours();
+        var mm = dateObj.getMinutes();
+        var ss = dateObj.getSeconds();
+
+        if (isFromTime)
+            return y + "-" + m + "-" + d + " 00:00:00";
+        else
+            return y + "-" + m + "-" + d + " 23:59:59";
+    }
+    /** get the week schedule of login doctor */
+    function GetWeekSheduleData(DoctorId, LocationId) {
+        var datalist = null;
+        $("#divLoading").show();
+        $.ajaxSetup({ async: false });
+        $.ajax({
+            url: "/Appointment/GetWeekSheduleData/?DoctorId=" + DoctorId + "&TheatreID=0&LocationId=" + LocationId,
+            type: "post",
+            success: function (data) {
+                datalist = data
+                $("#divLoading").hide();
+            },
+            error: function (response, status, xhr) {
+                if (response.status == 403) {
+                    SessionExpire(response.responseText)
+                }
+            }
+        });
+        $.ajaxSetup({ async: true });
+
+        return datalist;
+    }
+
+    /** It returns from list of objects from "obj" based on specific "key" has a specific "val" **/
+    function getObjects(obj, key, val) {
+        var objects = [];
+        for (var i in obj) {
+            if (!obj.hasOwnProperty(i)) continue;
+            if (typeof obj[i] == 'object') {
+                objects = objects.concat(getObjects(obj[i], key, val));
+            } else if (i == key && obj[key] == val) {
+                objects.push(obj);
+            }
+        }
+        return objects;
+    }
+    function isDateExists(obj, key, val) {
+        var result = false;
+        for (var i = 0; i < obj.length; i++) {
+            if (obj[i][key] instanceof Date && truncateTime(obj[i][key]).getTime() === truncateTime(val).getTime()) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+    function trancatetime(stdate) {
+        var d = new Date(stdate);
+        return new Date(d.setHours(0, 0, 0, 0));
+
+    }
+
+</script>

@@ -1,0 +1,144 @@
+﻿@model NewRecordlinc.Models.Appointment.CreateAppointment
+@using NewRecordlinc.Models.Common
+<link href="~/Content/css/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui-datepicker.js"></script>
+<style>
+    .devdatebox {
+        background-color: #0691c5;
+        color: #fff;
+        display: inline-block;
+        height: auto;
+        line-height: 30px;
+        margin: 1px -3px 0 0;
+        padding: 0 0 0 20px;
+        text-decoration: none;
+        width: 105px;
+    }
+
+    .blacakatebox {
+        background-color: #000000;
+        color: #fff;
+        display: inline-block;
+        height: auto;
+        line-height: 30px;
+        margin: 1px -3px 0 0;
+        padding: 0 0 0 20px;
+        text-decoration: none;
+        width: 105px;
+    }
+
+        .blacakatebox:hover {
+            background-color: #35C5F4;
+            text-decoration: none;
+            color: #fff;
+        }
+
+    .appointmentactivecls {
+        background-color: #35C5F4;
+        text-decoration: none !important;
+        color: #fff !important;
+    }
+
+    .devdatebox:hover {
+        background-color: #35C5F4;
+        text-decoration: none;
+        color: #fff;
+    }
+
+    .graydatebox {
+        background-color: #808080;
+        color: #fff;
+        display: inline-block;
+        height: auto;
+        line-height: 30px;
+        margin: 1px -3px 0 0;
+        padding: 0 0 0 20px;
+        text-decoration: none !important;
+        width: 105px;
+    }
+
+        .graydatebox:hover {
+            background-color: #808080;
+            text-decoration: none !important;
+            color: #fff;
+            cursor: not-allowed;
+        }
+
+    #loadtimeslotegrid .cantainer .row {
+        border: 0px solid !important;
+        width: 100%;
+    }
+	.colormainbox{
+		width:auto;
+		float: left;
+		margin: 0 10px 5px 0;
+	}
+	.colorbox{
+		height:20px;
+		width:20px;
+		background-color:#0890C4;
+		float: left;
+		margin: 0 3px 0 0;
+	}
+    .greycolorbox{
+		height:20px;
+		width:20px;
+		background-color:#808080;
+		float: left;
+		margin: 0 3px 0 0;
+	}
+	
+
+    @@media (max-width: 1000px) {
+        .texttimebox {
+            width: 100%;
+        }                               
+    }
+	
+@@media only screen and (max-width: 1030px) and (min-width: 1000px){
+	.devdatebox {
+		padding: 0px !important;
+		width: 76px !important;
+		text-align:center !important;
+	}
+}
+</style>
+<div id="msform">
+    <div class="col-md-12">
+        <h2 class="fs-title">&nbsp; Book Your Appointment </h2>
+    </div>
+    <button data-dismiss="modal" type="button" class="mfp-close">×</button>
+    <!-- progressbar -->
+    <ul id="progressbar" style="font-size:17px;">
+        <li>Select Patient </li>
+        <li style="cursor:pointer" onclick="GotoPrevStep2()">Select Provider</li>
+        <li class="active">Book Appointment</li>
+    </ul>
+    <fieldset>
+        <div class="col-md-12 noappointment" id="loadtimeslotegrid">
+        </div>
+        <div class="col-md-12">
+            <span id="lbltimeselection" class="errormsg">Please select appointment time.</span>
+            <span id="lblslotmessage" class="errormsg"></span>
+        </div>
+        <div class="col-md-12 texttimebox" id="dvslotnewdesc" style="margin-top:30px;display:none">
+            <div class="colormainbox"><div class="colorbox"></div>Available Slots</div>
+            <div class="colormainbox"><div class="greycolorbox"></div>Booked Slots</div>
+
+        </div>
+        <div class="col-md-12 texttimebox">
+            <textarea id="txtnote" name="txtnote" placeholder="Note" type="text" class="custominputclass123" style="width:100%;margin-top: 2px;padding: 12px; border: 1px solid rgb(204, 204, 204);"></textarea>
+            @*<input type="text"  class="custominputclass123" style="width:100%;margin-top: 30px;padding: 12px; border: 1px solid rgb(204, 204, 204);" id="txtnote" name="txtnote" placeholder="Note">*@
+        </div>
+        <div class="col-md-12">
+            <br />
+            <button type="button" name="previous" class="previous action-button" value="Previous" onclick="GotoPrevStep2()"><img src="~/Content/Appointment/Images/previous.png"></button>
+            <button id="btnsave" style="width:auto;" type="submit" name="submit" class="submit action-button" value="Book Appointment" onclick="SaveAppointment()"><img src="~/Content/Appointment/Images/book-appointment.png"></button>
+            <button  id="btnupdate" style="width:auto;display:none;" type="submit" name="submit" class="submit action-button" value="Update Appointment" onclick="SaveAppointment()"><img src="~/Content/Appointment/Images/update-appointment.png"></button>
+        </div>
+    </fieldset>
+</div>
+<script src="~/Scripts/ControllerJS/Appointment/SaveBookAppointment.js"></script>
+<script>
+
+</script>

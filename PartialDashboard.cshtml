@@ -1,0 +1,1795 @@
+﻿@model NewRecordlinc.Models.Colleagues.Member
+@{
+    ViewBag.Title = "Recordlinc - Dashboard";
+    Layout = "~/Views/Shared/SiteLayoutInner.cshtml";
+}
+<style>
+
+.people_list .list_panel_dashboard ul li .dataList {
+    width: 95%;
+}
+
+.top_heading {
+    background: #b1bcd0 none repeat scroll 0 0;
+    border: 1px solid #d0d0d0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    height: 34px;
+    padding: 4px 0 0;
+    position: relative;
+	text-transform: uppercase;
+}
+.top_heading {
+    border: 0 solid #d0d0d0;
+}
+.fa {
+    display: none !important;
+}
+.top_heading h2 a {
+    font-weight: bold;
+    text-decoration: none;
+}
+i.patient {
+    display: none;
+}
+i.profile {
+    display: none;
+}
+.people_list .thumb img {
+    border-radius: 50%;
+}
+a {
+    color: #818b97;
+    text-decoration: none;
+}
+.slide_panel {
+    border-right: 1px solid #fff;
+}
+.accordion a {
+    border-bottom: 0 solid #d3e4f0;
+    border-top: 0 solid #f2f8fc;
+	padding: 15px 10px 7px 15px;
+}
+
+.accordion li i, .accordion li, .accordion li a {
+    line-height: 40px;
+}
+.btn-deshboard{
+	border: 1px solid #ccc;
+	font-size: 18px;
+    padding: 20px;
+	text-align: left;
+	color: #193962;
+	line-height: 59px;	
+}
+.btn-deshboard img{
+	margin: 0 20px 0 0;
+}
+
+.top_heading h2 {
+    font-size: 15px;
+}
+.profile_thumb img{
+	border-radius: 50% !important;
+}
+ul.dashboard_tour li {
+    width: 23%;
+	margin: 0 10px 20px 0;
+}
+.invite_box {
+    background-color: #395070;
+	border: 0 solid #cdcdcd;
+}
+.devboxx{
+	background-color:#395070;
+}
+.devboxx h2 a{
+	color: #fff;
+	text-transform: capitalize;
+}
+.clearfix .invite_box input{
+	border: 0 solid #ccc;
+	background-color:#fff;
+}
+.mainBox2{
+	background-color: #395070;
+    padding: 20px;
+}
+.top_heading a.viewAll {
+    background-color: #fff;
+    border-radius: 2px;
+    font-size: 12px;
+    margin: -4px 0 0;
+    padding: 4px 11px 3px 10px;
+}
+.submit-btm {
+    background-color: #4babd1;
+    border-radius: 2px;
+	cursor:pointer;
+    color: #fff;
+	display: inline-block;
+    font-size: 15px;
+    padding: 11px 20px;
+	margin-top: 10px;
+    width: 50px;
+}
+.invite_box input[type="text"] {
+    background: rgba(0, 0, 0, 0) url("/content/images/mail-icon2.png") no-repeat scroll 14px center;
+	background-color:#fff;
+}
+table, thead, tbody, th, td, tr {
+    display: -moz-stack;
+}
+
+
+
+
+
+
+
+
+.accordion a:hover, .accordion a.active {
+    text-decoration: none;
+}
+
+.slide_panel {
+    background: transparent;
+	background-color:#DDEEFB;
+    border-right: 1px solid #ccc;
+    float: left;
+    height: 100%;
+    margin-left: 0;
+    position: absolute;
+    top: 61px;
+    width: 250px;
+    z-index: 1;
+}
+   
+	.bs-example button {
+		background-color: #fff;
+		border: 0 solid;
+		margin: 10px;
+	}
+	.media-heading{
+		font-size:14px;
+		text-align:center;
+		color:#A9B0B8;
+		line-height:22px;
+	}
+	.h1, .h2, .h3, h1, h2, h3 {
+		margin-bottom: 0;
+		margin-top: 0;
+	} 
+	.content_base {
+		margin-left: 250px;
+		overflow: hidden;
+		padding: 0 30px 0 25px;
+		position: relative;
+	}
+	
+@@media only screen and (min-width:1025px) and (max-width: 1315px)  {
+		.btn-deshboard {
+		border: 1px solid #ccc;
+		color: #193962;
+		font-size: 15px;
+		line-height: 59px;
+		padding: 2px;
+		text-align: left;
+	}
+	.btn-deshboard img {
+		margin: 0 2px 0 0;
+	}
+}
+@@media only screen and (min-width:865px) and (max-width: 1025px)  {
+		.content_base {
+		margin-left: 60px;
+	}
+	.btn-deshboard {
+		border: 1px solid #ccc;
+		color: #193962;
+		font-size: 15px;
+		line-height: 59px;
+		padding: 2px;
+		text-align: left;
+	}
+	.slide_panel{
+		width: auto !important;
+	}
+}
+@@media only screen and (min-width:601px) and (max-width: 865px)  {
+		.content_base {
+		margin-left: 60px;
+	}
+	.btn-deshboard {
+		border: 1px solid #ccc;
+		color: #193962;
+		font-size: 15px;
+		line-height: 59px;
+		padding: 2px;
+		text-align: left;
+	}
+	ul.dashboard_tour li {
+		margin: 0 10px 20px 0;
+		width: 46%;
+	}
+	.slide_panel{
+		width: auto !important;
+	}
+
+}	
+@@media only screen and (min-width:300px) and (max-width: 601px)  {
+		.content_base {
+		margin-left: 60px;
+	}
+	.btn-deshboard {
+		border: 1px solid #ccc;
+		color: #193962;
+		font-size: 15px;
+		line-height: 59px;
+		padding: 2px;
+		text-align: left;
+	}
+	ul.dashboard_tour li {
+		margin: 0 10px 20px 0;
+		width: 46%;
+	}
+	ul.dashboard_tour li a {
+		display: inline !important;
+	}
+	ul.dashboard_tour li {
+		border-right: 0 solid #0591c5 !important;
+		height: auto !important;
+	}
+	.btn-deshboard {
+		width: 92%;
+	}
+	.slide_panel{
+		width: auto !important;
+	}
+	#notifications .col1, #notifications .col2, #notifications .col3 {
+		vertical-align: top;
+		width:75px !important;
+	}
+
+}
+
+
+
+
+
+
+    @@media (max-width: 800px) {
+        .floatRight {
+            width: 100% !important;
+        }
+
+        .people_list1 {
+            float: right;
+            width: 100% !important;
+        }
+
+        .inviteb {
+            padding-right: 0px !important;
+        }
+
+        .invite_box {
+            margin: 0px 0px 0 0;
+        }
+
+            .invite_box input[type="text"] {
+                display: inline-block;
+                float: none !important;
+                width: 99% !important;
+            }
+
+        #notifications .table_data {
+            padding: 10px 2px;
+        }
+
+        .table_data .col1 {
+            padding-left: 5px;
+        }
+
+        ul.dashboard_tour li a span {
+            border-right: 1px solid #0591c5;
+            width: 290px;
+        }
+		#notifications .col1, #notifications .col2, #notifications .col3 {
+			vertical-align: top;
+			width: 16%;
+		}
+		.newtr {
+			height: 13px;
+			width: auto !important;
+			display: -webkit-box;
+    }
+		.dataList, .flex-direction-nav li {
+			box-sizing: border-box;
+			width: 100% !important;
+		}
+
+    }
+
+
+
+    .tooltip {
+        color: green;
+        text-decoration: none;
+    }
+
+        .tooltip:hover {
+            position: relative;
+            -o-object-position: 2em;
+        }
+
+    /* Tooltip on Top */
+    .tooltip-top[data-tooltip]:hover:after {
+        content: attr(data-tooltip);
+        padding: 4px 8px;
+        margin-bottom: 5px;
+        position: absolute;
+        left: 0;
+        bottom: 100%;
+        border-radius: 5px;
+        z-index: 20px;
+        background-color: #0890c4;
+        color: #fff;
+    }
+</style>
+<style>
+    .search_listing > li {
+        padding-right: 10px !important;
+        padding-top: 10px !important;
+    }
+
+    #notifications .trow {
+        padding-bottom: 8px !important;
+        padding-top: 19px !important;
+    }
+
+    .inviteb {
+        box-sizing: border-box;
+        padding-right: 295px !important;
+        position: relative;
+        width: 100%;
+    }
+
+    .people_list1 {
+        float: right;
+        width: 29.9%;
+        margin-top: 20px !important;
+    }
+
+    .dev213 {
+        height: 43px;
+        width: 100% !important;
+    }
+
+    .newtbl {
+        width: 100%;
+        border: 0px solid;
+        border-radius: 5`~ `12px !important;
+        display: -moz-deck;
+    }
+
+    .newtr {
+        height: 13px;
+         /*width: 100px !important;*/ 
+    }
+
+    .newtd {
+        width: 20%;
+        background: rgb(109,179,242);
+        background: -moz-linear-gradient(top, rgba(109,179,242,1) 0%, rgba(109,179,242,1) 50%, rgba(109,179,242,1) 51%, rgba(109,179,242,1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, rgba(109,179,242,1) 0%,rgba(109,179,242,1) 50%,rgba(109,179,242,1) 51%,rgba(109,179,242,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, rgba(109,179,242,1) 0%,rgba(109,179,242,1) 50%,rgba(109,179,242,1) 51%,rgba(109,179,242,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6db3f2', endColorstr='#1e69de',GradientType=0 ); /* IE6-9 */
+    }
+
+    .dev123 {
+        border-radius: 5px !important;
+        border: 1px solid;
+    }
+
+    table {
+        border-collapse: separate !important;
+    }
+
+    .mainBox .main_panel {
+        padding: 9px;
+    }
+
+    .floatRight {
+        float: right;
+        width: 30%;
+        margin-bottom: 25px;
+    }
+
+    span.send_referral {
+        background-position: 0px -1275px !important;
+    }
+
+    .info_sections {
+        margin-left: -12px;
+        padding-right: 12px;
+        <!-- margin-bottom: 80px; -->
+    }
+
+    footer, .push {
+        height: 0px;
+    }
+
+    .content {
+        float: left;
+        padding: 0 0 0px !important;
+        width: 100%;
+    }
+
+    @@media only screen and (max-width: 600px) {
+
+        ul.dashboard_tour li span.send_referral {
+            background-position: 0px -1157px !important;
+        }
+
+        ul.dashboard_tour li span.add_colleague {
+            background-position: 0px -158px;
+        }
+
+        ul.dashboard_tour li span.add_patient {
+            background-position: 0 -104px;
+        }
+
+        ul.dashboard_tour li span.send_message {
+            background-position: 0 -52px;
+        }
+
+        ul.dashboard_tour li a span {
+            border-right: 1px solid #0591c5;
+            width: 325px;
+        }
+        ul.dashboard_tour li {
+            border-right: 1px solid #0591c5;
+			height: auto !important;
+            overflow: hidden;
+			width: 100%;
+        }
+
+        .content_base {
+            padding: 10px 15px 0;
+        }
+
+        ul.dashboard_tour li a {
+            display: -moz-box;
+            text-decoration: none;
+        }
+    }
+
+@@media only screen and (max-width: 500px) {
+		#notifications .col1, #notifications .col2, #notifications .col3 {
+			vertical-align: top;
+			width:50px !important;
+			font-size: 9px;
+    }
+		
+		.tbody a {
+			color: #666;
+			font-size: 9px;
+			text-decoration: none;
+		}
+}
+</style>
+<!-- <style>
+    @@-moz-document url-prefix() {
+        .inviteb {
+            padding-right: 302px !important;
+        }
+    }
+</style> -->
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<!-- Main content -->
+<div class="content">
+    <input type="hidden" id="DahboardColleaguPageIndex" value="1" />
+    <input type="hidden" id="dashboardcolleageId" value="" />
+    <input type="hidden" id="dashboardlocationId" />
+    <input type="hidden" id="dashboardpatientId" value="" />
+
+
+    <a href="#add_doctor_popup" title="Referral" class="frmreferpatients edit popup-with-form showlightbox"
+       id="OpenColleguePopup" style="display: none;"></a>
+    <div class="content_base">
+        <!-- Breadcrumb starts-->
+        <div class="breadcrumb">
+            <ul>
+                <li>
+                    <a href='@Url.Action("Index", "Index")'>
+                        <img width="16" height="14" class="hires" src="../../Content/images/home-icon.png"
+                             alt="Home">
+                    </a><span class="after"></span>
+                </li>
+                <li class="active">
+                    <span class="before"></span><a href='@Url.Action("Dashboard", "Dashboard")'>
+                        Dashboard
+                    </a><span class="after"></span>
+                </li>
+            </ul>
+        </div>
+        <!-- Breadcrumb ends-->
+        <!-- Dashboard icons starts-->
+        <div class="dashboard_links clearfix">
+            <ul class="dashboard_tour">
+                <li><a href='javascript:void(0)' onclick="OpenColleaguePopup()"><div class="btn-deshboard"><img src="/images/SendReferral.png">Send Referral</div></a></li>
+                <li><a href='@Url.Action("AddPatient", "Patients")'><div class="btn-deshboard"><img src="/images/Add-Patient.png">Add Patient</div></a></li>
+                <li><a href='@Url.Action("SearchColleagues", "Colleagues")'><div class="btn-deshboard"><img src="/images/Add-Colleague.png">Add Colleague</div></a></li>
+                <li>
+                    <a href='@Url.Action("Compose", "Inbox")'><div class="btn-deshboard"><img src="/images/Sent-Message.png">Sent Message</div></a>
+                    @*<a class="edit popup-with-form showlightbox" id="editform" href="#uprofile" onclick="EditDoctorDetialsById('@HttpContext.Current.Session["UserId"]')">
+                            <span class="edit_profile">Edit Profile</span>
+                        </a>*@
+                </li>
+            </ul>
+        </div>
+        <!-- Dashboard icons ends-->
+        <!-- Dashboard sections starts-->
+        <div class="dashboard_sections">
+            <div class="dashboard_info">
+                <!-- Info Sections -->
+                <div class="info_sections clearfix">
+                    <!-- Notifications -->
+                    @*Nimesh*@
+                    <div id="notifications">
+                        <div class="mainBox">
+                            <div class="top_heading">
+                                <h2>
+                                    <a class="heading_link" href='@Url.Action("Index", "Inbox")'>
+                                        @*<i class="fa fa-envelope-o fa-lg" aria-hidden="true"></i>*@
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        Inbox
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="table_data" id="inboxBody">
+                                @Html.Raw(ViewBag.InBoxOfDoctor)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="notifications">
+                        <div class="mainBox">
+                            <div class="top_heading">
+                                <h2>
+                                    <a class="heading_link" href='@Url.Action("Index", "Appointment")'>
+                                        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                        @*<i class="notifics"></i>*@
+
+                                        Appointment
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="table_data" id="AppDashBoardNotification">
+                                @Html.Raw(ViewBag.AppDashBoardNotification)
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Profile Box -->
+                    @*<div class="mainBox floatRight">
+                            <div class="top_heading">
+                                <h2>
+                                    <a class="heading_link" href='@Url.Action("Index", "Profile")'>
+                                        <i class="profile"></i>
+                                        Profile
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="list_panel">
+                                <div class="main_panel">
+                                    <div class="profile_desc">
+                                        <div class="profile_thumb">
+                                            <img src="@Model.ImageName" style="width:100px;height:100px;" />
+                                        </div>
+                                        <div class="profile_info">
+                                            <h2>
+                                                @Model.OfficeName
+                                                @foreach (var SpecialitiesOfDoctor in Model.lstSpeacilitiesOfDoctor)
+                                                {
+                                                    <span>@SpecialitiesOfDoctor.SpecialtyDescription </span>
+                                                }
+                                            </h2>
+                                            <a href='@Url.Action("Index", "Profile")'>Complete your profile</a> <a class="phone_no" href="#" style="display: none;"><i class="phone"></i>(415)749-1444</a>
+                                            <div class="clear">
+                                            </div>
+                                        </div>
+                                        <div class="clear">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <!-- Patient Box -->
+                    <div class="mainBox">
+                        <div class="top_heading">
+                            <h2>
+                                <a href='@Url.Action("Index", "Patients")' class="heading_link">
+                                    <i class="patient"></i>
+                                    Patients
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="list_panel">
+                            <ul>
+                                @*<li><a href='@Url.Action("AddPatient", "Patients")'>Add New Patient</a></li>*@
+                                <li>
+                                    <a href='@Url.Action("Index", "Patients")'>
+                                        Patients
+
+                                        @("(" + ViewBag.PatientCount + ")")
+
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- People you Know Panel starts -->
+
+
+        <div class="people_list">
+            <div class="mainBox">
+                <div class="top_heading">
+                    <h2>
+                        <a href='@Url.Action("Index", "Colleagues")' class="heading_link">
+                            <i class="fa fa-users" aria-hidden="true" style="margin-right:2px;">
+                            </i>Colleagues
+                        </a>
+                    </h2>
+                    <a href='@Url.Action("Index", "Colleagues")' class="viewAll">View all</a>
+                </div>
+                <div class="list_panel_dashboard clearfix">
+                    <div class="flexslider">
+                        <div id="divpeopleyoumayknow">
+                            @*@Html.Raw(ViewBag.peopleyoumayknow)*@
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="people_list1">
+            <!-- Invitations -->
+            <div class="mainBox mainBox2">
+                <div class="top_heading devboxx" style="margin-top: 0px !important;">
+                    <h2><a class="heading_link">Add colleagues to your referral list</a></h2>
+                </div>
+                <div class="list_panel_dashboard clearfix">
+                    <div class="invite_box inviteb" style="padding-right: 5px !important;">
+                        <input class="dev213" id="txtemail" type="text" value="Email" onblur="if (this.value == '') {this.value = 'Email';}"
+                               onfocus="if (this.value =='Email') {this.value = '';}" /><div class="submit-btm" onclick="return ValidateEmail()">Submit</div></div><!-- <img src="~/Content/images/submit_btn@2x.png" style="height: 39px; margin-top:3px;" onclick="return ValidateEmail()" /> -->
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="invite_box inviteb" style="display:none">
+                        <input type="text" value="Email" id="txtemailreferral" onblur="if (this.value == '') {this.value = 'Email';}"
+                               onfocus="if (this.value =='Email') {this.value = '';}" />
+                        <!-- Chirag -->
+                        <a href="#sendReferral" class="edit popup-with-form showlightbox" id="ReferralPopUpOpen">
+                        </a>
+                        <input class="referral_email" name="Invite by Email" type="submit" onclick="return ValidateEmailReferral()" />
+                        <!-- Chirag -->
+                        <div class="clear">
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="mainBox floatRight people_list1">
+            <div class="top_heading">
+                <h2>
+                    <a class="heading_link" href='@Url.Action("Index", "Profile")'>
+                        <i class="profile"></i>
+                        Profile
+                    </a>
+                </h2>
+            </div>
+            <div class="list_panel" style="height: auto !important;">
+                <div class="main_panel">
+                    <div class="profile_desc">
+                        <div class="profile_thumb">
+                            <img src="@Model.ImageName" style="width:100px;height:100px;" />
+                        </div>
+                        <div class="profile_info">
+                            <h2>
+                                @Model.OfficeName
+                                @foreach (var SpecialitiesOfDoctor in Model.lstSpeacilitiesOfDoctor)
+                                {
+                                    <span>@SpecialitiesOfDoctor.SpecialtyDescription </span>
+                                }
+                            </h2>
+                            <a href='@Url.Action("Index", "Profile")'>Complete your profile</a> <a class="phone_no" href="#" style="display: none;"><i class="phone"></i>(415)749-1444</a>
+                            <div class="clear">
+                            </div>
+                        </div>
+                        <div class="clear">
+                        </div>
+                    </div>
+                    <div class="profile_desc">
+                        <table class="newtbl tooltip tooltip-top" style="border: 1px solid;" data-tooltip="Remain to complete your profile: @Model.RemainList.TrimEnd(',')">
+                            <tr class="newtr">
+
+                                @for (int i = 0; i < Model.ProfileComplete; i++)
+                                {
+                                    <td class="newtd"></td>
+                                }
+                                <td style="width:20%"></td>
+                                <td style="width:20%"></td>
+                                <td style="width:20%"></td>
+                                <td style="width:20%"></td>
+                                <td style="width:20%"></td>
+                            </tr>
+
+                        </table>
+                        <span>@Model.Profilepercentage% of your profile is completed.</span>
+                        @*<span class="tooltiptext">@Model.RemainList are Remain to complete your profile.</span>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clear">
+        </div>
+    </div>
+    <!-- Dashboard sections ends-->
+</div>
+<!-- content base ends-->
+<!--edit profile popup start-->
+<div id="uprofile" class="mfp-hide white-popup-block">
+</div>
+<!--edit profile popup end-->
+</div>
+<!-- content ends here -->
+<form action="@Url.Action("Index", "Profile")" method="post" id="frmViewProfile" target="_blank">
+    <input type="hidden" name="hdnViewProfile" id="hdnViewProfile" value="" />
+</form>
+<script type="text/javascript">
+
+
+
+    function ValidateEmailReferral() {
+        var result1 = IsEmail($("#txtemailreferral").val());
+        if (result1 == true) {
+
+
+
+
+            $.post("/Dashboard/SendReferralByEmail",
+                                    { Email: $("#txtemailreferral").val() }, function (data) {
+
+
+                                        if (data == "SendTemplate") {
+                                            //alert('We have sent invitation to ' + $("#txtemailreferral").val() + 'to join Recordlinc. Once ' + $("#txtemailreferral").val() + ' joins Recordlinc you can send referral.');
+                                            swal({ title: "", text: 'We have sent invitation to ' + $("#txtemailreferral").val() + 'to join Recordlinc. Once ' + $("#txtemailreferral").val() + ' joins Recordlinc you can send referral.', type: 'success' });
+
+                                        }
+                                        else if (data == "false") {
+                                            //alert('You can not send referral to yourself');
+                                            swal({ title: "", text: 'You can not send referral to yourself', type: 'error' });
+                                        }
+                                        else {
+
+                                            OpenPopup(data.toString());
+
+                                            $('#ReferralPopUpOpen').click();
+
+
+                                        }
+                                        $("#txtemailreferral").val('Email');
+
+                                    });
+
+
+
+
+        }
+        else {
+            //alert("Please Enter Valid Email Id");
+            swal({ title: "", text: 'Please Enter Valid Email Id' });
+            document.getElementById("txtemailreferral").focus();
+            return false;
+        }
+    }
+
+    //function OpenPopup(ColleagueId) {
+
+
+    //    document.getElementById('hdncolleagueid').value = ColleagueId.toString();
+
+    //    SearchPatient();
+    //}
+
+    // For Patient List Pop up - End
+
+    function ReferralSend() {
+
+        var PatientId = null;
+
+        var c = new Array();
+        c = document.getElementsByTagName('input');
+
+        for (var i = 0; i < c.length; i++) {
+            if (c[i].type == 'checkbox' && c[i].id == 'chkPatient' && c[i].checked == true) {
+
+                if (PatientId == null) {
+
+                    PatientId = c[i].value;
+                }
+                else {
+                    //alert('Doctor can send referral only one patient');
+                    swal({ title: "", text: 'Doctor can send referral only one patient' });
+                    return false;
+
+                }
+
+            }
+        }
+
+        if (PatientId == null) {
+
+            // alert('Please select atleast one Patient');
+            swal({ title: "", text: 'Please select at least one Patient' });
+
+            return false;
+        }
+        var LocationId = $("#LocationID").val();
+        var colleagueId = document.getElementById('hdncolleagueid').value;
+        window.location.href = '@Url.Action("Index", "Referrals")?PatientId=' + PatientId + '&ColleagueIds=' + colleagueId + "&AddressInfoId=" + LocationId;
+
+    }
+
+    function SearchPatient() {
+        var GetSearchText = null;
+        if ($('#txtSearchPatient').legnth == 0) {
+            GetSearchText = null;
+        }
+        else {
+            if (document.getElementById('txtSearchPatient').value == "Search Patient") {
+                GetSearchText = null;
+            }
+            else {
+                GetSearchText = document.getElementById('txtSearchPatient').value;
+            }
+        }
+        $.ajaxSetup({ async: false });
+        $.post("/Dashboard/SearchPatientFromPopUp",
+                                    { SearchText: GetSearchText }, function (data) {
+                                        document.getElementById("sendReferral").innerHTML = data;
+                                    });
+
+        $.ajaxSetup({ async: true });
+    }
+    //For Invite Colleague - Start
+    function ValidateEmail() {
+
+        var result = IsEmail($("#txtemail").val());
+        if (result == true) {
+
+            $.post("/Dashboard/InviteColleagueByEmail", { Email: $("#txtemail").val() },
+        function (data) {
+            if (data != '') {
+                $.ajaxSetup({ async: false });
+                if (data == "True") {
+                    //alert('Your invitation has been sent.');
+                    swal({ title: "", text: 'Your invitation has been sent.', type : 'success' });
+
+                }
+                else if (data == "false") {
+                    //alert('You can not invite yourself as colleague');
+                    swal({ title: "", text: 'You can not invite yourself as colleague', type : 'error' });
+                }
+                else if (data == "statusfalse") {
+                    //alert('Email entered already in profile, Please enter new email and invite');
+                    swal({ title: "", text: 'Email entered already in profile, Please enter new email and invite' });
+                }
+                else {
+                    //alert('Failed to sent Invitation');
+                    swal({ title: "", text: 'Failed to sent Invitation', type : 'error' });
+                    return false;
+                }
+                document.getElementById('txtemail').value = 'Email';
+            }
+            $.ajaxSetup({ async: true });
+        });
+
+        }
+        else {
+            //alert("Please Enter Valid Email Id");
+            swal({ title: "", text: 'Please Enter Valid Email Id' });
+            document.getElementById("txtemail").focus();
+            return false;
+        }
+    }
+    //For Invite Colleague - End
+
+
+
+
+    //For Edit Personal Deatails - Start
+    function EditDoctorDetialsById(idstr) {
+        $.ajaxSetup({ async: false });
+
+
+
+        $.post("/Profile/GetDoctorDetialsById", { UserId: idstr }, function (data) {
+            document.getElementById("uprofile").innerHTML = data.toString();
+        });
+
+
+        $.ajaxSetup({ async: true });
+    }
+    //For Edit Personal Deatails - End
+
+
+    //For ViewProfile on click Doctor Image ,Name - Start
+    function ViewProfile(id) {
+        $("#divLoading").show();
+        $('#hdnViewProfile').val(id);
+        $("#frmViewProfile").submit();
+        $("#divLoading").hide();
+    }
+    //For ViewProfile on click Doctor Image,Name - End
+
+    // For Add as Colleague - Start
+    function AddColleagues(id) {
+
+        $.post("/Colleagues/AddAsColleague", { ColleagueId: id },
+        function (data) {
+            if (data != '') {
+
+                if (data == "0") {
+                    // alert('Failed to Add As Colleague.');
+                    swal({ title: "", text: 'Failed to Add As Colleague.', type : 'error' });
+                    return false;
+                }
+                else {
+                    //alert("Successfully added as a colleague.");
+                    swal({ title: "", text: 'Successfully added as a colleague.', type : 'success' });
+                    $('#row' + id).remove();
+                    return true;
+                }
+
+            }
+
+        });
+    }
+
+    // For Add as Colleague - End
+
+    // For People you may know - Start
+    function PeopleYouMayKnowNextPrev(PageIndex) {
+        $("#divLoading").show();
+        $.ajaxSetup({ async: false });
+        if (PageIndex == '1') {
+            $.post("/Dashboard/PeopleYouMayKnowNextPrev", { PageIndex: PageIndex },
+        function (data) {
+            if (data != '') {
+
+                document.getElementById("divpeopleyoumayknow").innerHTML = data; //ViewBag.SearchColleaguesResult
+
+            }
+            else { document.getElementById("divpeopleyoumayknow").innerHTML = ''; }
+
+            $("#divLoading").hide();
+        });
+        }
+
+
+        $.ajaxSetup({ async: true });
+    }
+
+    function PeopleYouMayKnowList() {
+        var PageIndex = $('#pageindexIdDoyouknow').val();
+        var listOfcolleage = '';
+        $.ajaxSetup({ async: false });
+        if (PageIndex == "-1") {
+            return "";
+        } else {
+            PageIndex = parseInt(PageIndex) + parseInt(1);
+            $.post("/Dashboard/PeopleDoyouKnowList", { PageIndex: PageIndex },
+        function (data) {
+            //if (data == "<center>No More Record Found</center>" || data == '') {
+            if (data == "<center>No More Record Found</center>" || data == '') {
+                $('#pageindexIdDoyouknow').val("-1");
+            } else {
+                $('#pageindexIdDoyouknow').val(PageIndex)
+            }
+            listOfcolleage = data;
+        });
+        }
+        $.ajaxSetup({ async: true });
+        return listOfcolleage;
+    }
+
+    // For People you may know - End
+    // View Patient History - Start
+    function ViewPatientHistory(PatientId) {
+        $('#hdnViewPatientHistory').val(PatientId);
+        $("#frmViewPatientHistory").submit();
+    }
+    //View Patient History - End
+
+
+    //For close pop up start
+    function CloseEditPatientListpop() {
+        $(".mfp-close").click();
+    }
+    //for clsoe pop up end
+
+
+</script>
+<script type="text/javascript">
+
+    $(document).keydown(function (e) {
+        if (e.which == 116) {
+            window.location.href = "../Dashboard/Dashboard";
+            return false;
+        }
+    });
+    $(document).on('keypress', '#add_doctor_popup', function (e) {
+        var Keycodeof = e.keyCode
+        if (Keycodeof == 13) {
+            $("#SearchBtnHide").trigger('click');
+        }
+    });
+    $(document).ready(function () {
+     
+        $("#tblProfileComplete").tooltip({});
+        $(document).on('click', 'a', function (event) {
+            var role = $(this).data("role");
+            var rolevalue = $(this).data("value");
+            var roleemail = $(this).data("email");
+
+            var rolePageIndex = $(this).data("pageindex");
+
+            if (role != '' && rolevalue != '') {
+                if (role == 'OpenSuggestionBox') {
+                    OpenSuggestionBox(rolevalue);
+                }
+                else if (role == 'SearchInboxFromColleageReferrals') {
+                    SearchInboxFromColleageReferrals(roleemail, 'Refer Patient');
+                }
+                else if (role == 'SearchSentboxFromColleageReferrals') {
+                    SearchSentboxFromColleageReferrals(roleemail, 'Refer Patient');
+                }
+                else if (role == 'OpenPopup') {
+                    OpenPopup(rolevalue);
+                }
+
+            }
+
+        });
+
+
+        $("#divLoading").show('fast');
+        PeopleYouMayKnowNextPrev(1);
+       
+
+        $('#ScrollInbox').scroll(function () {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                var data = SortingColumn().toString();
+                $(this).append(data);
+            }
+        });
+
+        $('#ScrollAppointment').scroll(function () {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                var data = SortingAppointmentColumn().toString();
+                $(this).append(data);
+            }
+        });
+
+        $('#ScrollPeopleYouKNow').scroll(function () {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                var data = PeopleYouMayKnowList().toString();
+                $(this).append(data);
+            }
+        });
+
+        $('#sendReferral').on('keypress', function (e) {
+            var Keycodeof = e.keyCode
+            if (Keycodeof == 13) {
+                $("#SearchBtnHide").trigger('click');
+            }
+        });
+
+        $('.showlightbox').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            focus: '#name',
+
+            // When elemened is focused, some mobile browsers in some cases zoom in
+            // It looks not nice, so we disable it:
+            callbacks: {
+                beforeOpen: function () {
+                    if ($(window).width() < 700) {
+                        this.st.focus = false;
+                    } else {
+                        this.st.focus = '#name';
+                    }
+                }
+            }
+        });
+
+        $(".cancel_btn").click(function () {
+            $(".mfp-close").click();
+        });
+
+
+        $('#editform_5').magnificPopup({
+            items: [
+      {
+          src: '#send_message_sel', // CSS selector of an element on page that should be used as a popup
+          type: 'inline'
+      }
+            ]
+        });
+
+
+    });
+
+
+    function SortingColumns(PageIndex, SortColumn, newSortDirection) {
+
+        $('#pageindexId').val("1");
+        $.ajaxSetup({ async: false });
+
+        $.post("/Dashboard/GetInboxofDoctor", { PageIndex: PageIndex, SortColumn: SortColumn, SortDirection: newSortDirection, Searchtext: '', IsRefarral: '' },
+        function (data) {
+            if (data != null && data != '') {
+                $('#inboxBody').empty().html(data);
+            } else {
+                $('#inboxBody').empty().html('');
+            }
+
+        });
+
+        $.ajaxSetup({ async: false });
+        $('#ScrollInbox').scroll(function () {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                var data = SortingColumn().toString();
+                $(this).append(data);
+            }
+        });
+
+    }
+
+    function SortingColumn() {
+
+        var listinbox = '';
+        $.ajaxSetup({ async: false });
+        var strSortColumn = $("#ScrollInbox").data("sortcolumn");
+        var strSortDirection = $("#ScrollInbox").data("sortirection");
+        var PageIndex = $('#pageindexId').val();
+        if (PageIndex == "-1") {
+            return "";
+        }
+        else {
+
+            PageIndex = parseInt(PageIndex) + parseInt(1);
+
+            $.post("/Dashboard/DashbordInboxlist", { PageIndex: PageIndex, SortColumn: strSortColumn, SortDirection: strSortDirection },
+        function (data) {
+
+            if (data == '<center><br /></center>') {
+
+                $('#pageindexId').val("-1");
+            } else {
+                $('#pageindexId').val(PageIndex);
+            }
+
+            listinbox = data;
+
+        });
+
+        }
+
+
+        $.ajaxSetup({ async: true });
+
+        return listinbox;
+    }
+
+    function SortingApointmentColumns(SortColumn, newSortDirection, PageIndex) {
+
+        $('#app-pageindex').val("1");
+        $.ajaxSetup({ async: false });
+
+        $.post("/Dashboard/AppointmentDashboardNotification", { SortColumn: SortColumn, SortDirection: newSortDirection, PageIndex: PageIndex },
+        function (data) {
+            if (data != null && data != '') {
+                $('#AppDashBoardNotification').empty().html(data);
+            } else {
+                $('#AppDashBoardNotification').empty().html('');
+            }
+
+        });
+
+        $.ajaxSetup({ async: false });
+        $('#ScrollAppointment').scroll(function () {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                var data = SortingAppointmentColumn().toString();
+                $(this).append(data);
+            }
+        });
+
+    }
+
+
+
+    function SortingAppointmentColumn() {
+
+        var listAppointment = '';
+        $.ajaxSetup({ async: false });
+        var strSortColumn = $("#ScrollAppointment").data("sortcolumn");
+        var strSortDirection = $("#ScrollAppointment").data("sortirection");
+        var PageIndex = $('#app-pageindex').val();
+        if (PageIndex == "-1") {
+            return "";
+        }
+        else {
+
+            PageIndex = parseInt(PageIndex) + parseInt(1);
+
+            $.post("/Dashboard/AppointmentListOnScroll", { PageIndex: PageIndex, SortColumn: strSortColumn, SortDirection: strSortDirection },
+        function (data) {
+
+            if (data == '<center><br /></center>') {
+
+                $('#app-pageindex').val("-1");
+            } else {
+                $('#app-pageindex').val(PageIndex);
+            }
+
+            listAppointment = data;
+
+        });
+
+        }
+
+
+        $.ajaxSetup({ async: true });
+
+        return listAppointment;
+    }
+
+
+
+    function OpenPopup(ColleagueId) {
+        GetColleaguesLocation(ColleagueId);
+
+    }
+    function SearchPatient() {
+        document.getElementById('search_listing_pageindex').value = "1";
+        var GetSearchText = null;
+        if (document.getElementById('txtSearchPatient') == null) {
+            GetSearchText = null;
+        } else if ($('#txtSearchPatient').legnth == 0) {
+            GetSearchText = null;
+        }
+        else {
+            if (document.getElementById('txtSearchPatient').value == "Find patient to refer...") {
+                GetSearchText = null;
+            }
+            else {
+                GetSearchText = document.getElementById('txtSearchPatient').value;
+            }
+
+        }
+        $.ajaxSetup({ async: false });
+
+
+        $.post("/Dashboard/SearchPatientFromPopUp",
+                                    { SearchText: GetSearchText }, function (data) {
+                                        document.getElementById("sendReferral").innerHTML = data;
+                                    });
+
+
+        $.ajaxSetup({ async: true });
+        $(".search_listing").bind('scroll', function (event) {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                var data = SearchPatientLI().toString();
+                $(this).append(data);
+            }
+        });
+    }
+
+    function SearchPatientLI() {
+        $.ajaxSetup({ async: false });
+        var GetSearchText = null; if (document.getElementById('txtSearchPatient') == null) {
+            GetSearchText = null;
+        } else if ($('#txtSearchPatient').legnth == 0) {
+            GetSearchText = null;
+        }
+        else {
+            if (document.getElementById('txtSearchPatient').value == "Find patient to refer...") {
+                GetSearchText = null;
+            }
+            else {
+                // GetSearchText = document.getElementById('txtSearchPatient').value;
+            }
+        }
+
+        var lidata = '';
+        var strpageindex = document.getElementById('search_listing_pageindex').value;
+        if (strpageindex == "-1") {
+            return "";
+        }
+        else {
+
+            strpageindex = parseInt(strpageindex) + parseInt(1);
+            document.getElementById('search_listing_pageindex').value = strpageindex;
+
+
+            $.post("/Dashboard/SearchPatientListForSendReferralPopUpLI",
+                                { SearchText: GetSearchText, pageindex: strpageindex, pagesize: '30' }, function (data) {
+                                    if (data != null) {
+                                        if (data == '' || data == "<center>No Record Found</center>" || data == "<center>No More Record Found</center>") {
+                                            $("#EmptyRecord").empty().html("<center>No more records found</center>");
+                                            document.getElementById('search_listing_pageindex').value = "-1";
+                                        }
+                                    }
+                                    lidata = data.toString();
+                                });
+
+
+
+
+        }
+        $.ajaxSetup({ async: true });
+        return lidata;
+    }
+
+    //For close pop up start
+    function CloseEditPatientListpop() {
+        $(".mfp-close").click();
+    }
+    function GetColleaguesLocation(ColleagueId) {
+        $.ajaxSetup({ async: false });
+        $.post("/Dashboard/GetLocationColleagues",
+                                            { ColleagueId: ColleagueId }, function (data) {
+                                                //var countdata = data;
+                                                if (data == "2") {
+                                                    //alert("Something is Wrong.");
+                                                    swal({ title: "", text: 'Something is Wrong.', type : 'error' });
+                                                }
+                                                if (data == "1") {
+                                                    document.getElementById('hdncolleagueid').value = ColleagueId.toString();
+                                                    SearchPatient();
+                                                    $('#OpenPatientListPopUp').click();
+                                                }
+                                                else {
+                                                    document.getElementById('hdncolleagueid').value = ColleagueId.toString();
+                                                    SearchPatient();
+                                                    $('#OpenPatientListPopUp').click();
+                                                    $(".patient_searchbar").hide();
+                                                    $("#Patientcallonscroll").hide();
+                                                    $("#TitleRefer").html("Select Location");
+                                                    $("#ColleagueLocation").html(data);
+                                                }
+                                            });
+        $.ajaxSetup({ async: true });
+    }
+    //$(document).ready(function (e) {
+    //    $("input.checkcolleaguelocation:checkbox").live('click', function (event) {
+    //        var myInput = $(this);
+    //        if (myInput.attr('checked')) {
+    //            var divid = myInput.attr('value');
+    //            $("#" + divid).css('border-color', '#0890C4');
+    //            myInput.attr('checked', true);
+    //        }
+    //        else {
+    //            var divid = myInput.attr('value');
+    //            $("#" + divid).css('border-color', '#C8C8C8');
+    //            myInput.attr('checked', false);
+    //        }
+    //        event.stopPropagation();
+    //    });
+    //    $('div.class_locationcolleagues div').live('click', function (event) {
+    //        var myInput = $('input', this)
+    //        if (myInput.attr('checked')) {
+    //            var divid = myInput.attr('value');
+    //            $("#" + divid).css('border-color', '#C8C8C8');
+    //            myInput.attr('checked', false);
+    //        }
+    //        else {
+    //            var divid = myInput.attr('value');
+    //            $("#" + divid).css('border-color', '#0890C4');
+    //            myInput.attr('checked', true);
+    //        }
+    //        event.stopPropagation();
+    //    });
+
+    //});
+    function SelectPatient() {
+        var Multiple = null;
+        var c = new Array();
+        c = document.getElementsByClassName('checkcolleaguelocation');
+
+        for (var i = 0; i < c.length; i++) {
+            if (c[i].type == 'checkbox' && c[i].id == 'colleaguelocation' && c[i].checked == true) {
+
+                if (Multiple == null) {
+
+                    Multiple = c[i].value;
+                }
+                else {
+                    //alert('Doctor can Select One Location');
+                    swal({ title: "", text: 'Doctor can Select One Location' });
+                    return false;
+
+                }
+
+            }
+        }
+
+        if (Multiple != null && Multiple != "") {
+            $("#LocationID").val(Multiple);
+            $("#TitleRefer").html("Select Patient to Refer");
+            $(".patient_searchbar").show();
+            $(".patient_searchbar").show();
+            $("#Patientcallonscroll").show();
+            $("#ColleagueLocation").hide();
+        }
+        else {
+            swal({ title: "", text: 'Please select at least one location.' });
+            return false;
+        }
+
+    }
+    function OpenColleaguePopup() {
+        $('#txtSearchPatient').val('');
+        $('#dashboardcolleageId').val('');
+        $('#dashboardlocationId').val('');
+        $('#dashboardpatientId').val('');
+        DashboardSearchColleague();
+        $('#OpenColleguePopup').click();
+    }
+    function DashBoardReferralSend() {
+        var MultipleColleague = null;
+        var c = new Array();
+        c = document.getElementsByTagName('input');
+
+        for (var i = 0; i < c.length; i++) {
+            if (c[i].type == 'checkbox' && c[i].id == 'checkcolleague' && c[i].checked == true) {
+
+                if (MultipleColleague == null) {
+
+                    MultipleColleague = c[i].value;
+                }
+                else {
+
+                    MultipleColleague = MultipleColleague + ',' + c[i].value;
+                }
+
+            }
+        }
+        if (MultipleColleague == null) {
+            swal({ title: "", text: 'Please select at least one colleague.' });
+            //alert("Please Select Atleast One Colleague.")
+        }
+        else {
+            $("#dashboardcolleageId").val(MultipleColleague);
+            GetDashboardLocationColleagues(MultipleColleague);
+        }
+
+    }
+    function GetDashboardLocationColleagues(MultipleColleague) {
+        $.ajaxSetup({ async: false });
+        $.post("/Dashboard/GetLocationColleagues",
+                                            { ColleagueId: MultipleColleague, viewName: "PartialDashboardColleaguesLocation" }, function (data) {
+                                                //var countdata = data;
+                                                if (data == "1") {
+                                                    if (MultipleColleague != null && MultipleColleague != "") {
+                                                        SelectDashboardPatient();
+                                                    }
+                                                    else {
+                                                        swal({ title: "", text: 'Please select at least one colleague.' });
+                                                    }
+                                                }
+                                                else {
+                                                    $(".search_main_div").hide();
+                                                    $(".cntnt").hide();
+                                                    $("#ColleaguesLocation").html(data);
+                                                    $("#ReferralTitle").html("Select Colleague Location");
+                                                    $("#ColleaguesId").val(MultipleColleague);
+                                                    $("#PatientId").val(PatientId);
+                                                }
+                                            });
+        $.ajaxSetup({ async: true });
+    }
+    function DashboardSearchColleague() {
+        //$('#txtSearchPatient').val('');
+        $("#DahboardColleaguPageIndex").val("1");
+        var GetSearchText = null;
+        if ($('#txtSearchPatient').length == 0) {
+            GetSearchText = null;
+        }
+        else {
+            GetSearchText = document.getElementById('txtSearchPatient').value;
+            if (GetSearchText == "Find colleague to refer to...") {
+                GetSearchText = null;
+            }
+        }
+        $.ajaxSetup({ async: false });
+        $.post("/Dashboard/SearchColleagueFromPopUp",
+                                    { SearchText: GetSearchText }, function (data) {
+                                        document.getElementById("add_doctor_popup").innerHTML = data;
+                                    });
+        $.ajaxSetup({ async: true });
+        $(".search_listing").bind('scroll', function (event) {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                var data = DashboardSearchColleagueOnScroll().toString();
+                $(this).append(data);
+            }
+        });
+    }
+    function DashboardSearchColleagueOnScroll() {
+        var datalist = '';
+        $.ajaxSetup({ async: false });
+        var PageIndex = $("#DahboardColleaguPageIndex").val();
+        if (PageIndex == "-1") {
+            return "";
+        }
+        else {
+            PageIndex = parseInt(PageIndex) + parseInt(1);
+            $.post("/Dashboard/GetColleagueListForSendReferralPopUpOnScroll",
+               { PageIndex: PageIndex }, function (data) {
+                   if (data == '' || data == '<li><center>No more record found.</li>') {
+                       $("#EmptyRecord").empty().html("<center>No more records found</center>");
+                       $("#ColleaguPageIndex").val("-1");
+                   }
+                   else {
+                       $("#ColleaguPageIndex").val(PageIndex);
+                   }
+                   datalist = data;
+               });
+        }
+        $.ajaxSetup({ async: true });
+        return datalist;
+    }
+    function SelectToNextStep() {
+        var locationid;
+        var c = document.getElementsByClassName('checkcolleaguelocation');
+        for (var i = 0; i < c.length; i++) {
+            if (c[i].type == 'checkbox' && c[i].id == 'colleaguelocation' && c[i].checked == true) {
+                if (locationid == null) {
+                    locationid = c[i].value;
+                }
+                else {
+                    locationid = locationid + ',' + c[i].value;
+                }
+            }
+        }
+        MultipleColleague = $("#dashboardcolleageId").val();
+        if (locationid != null && locationid != "") {
+            if (MultipleColleague != null && MultipleColleague != "") {
+                document.getElementById('txtSearchPatient').value = '';
+                SearchDashBoardPatient();
+                $("#dashboardlocationId").val(locationid);
+            }
+            else {
+                swal({ title: "", text: 'Please select at least one colleague.' });
+                return false;
+                // alert('Please select at least one colleague.');
+            }
+        }
+        else {
+            swal({ title: "", text: 'Please select at least one Location.' });
+            return false;
+            //alert('Please select at least one Location.');
+        }
+    }
+    function SelectDashboardPatient() {
+        MultipleColleague = $("#dashboardcolleageId").val();
+        if (MultipleColleague != null && MultipleColleague != "") {
+            document.getElementById('txtSearchPatient').value = '';
+            SearchDashBoardPatient();
+            //$("#dashboardlocationId").val(locationid);
+        }
+        else {
+            swal({ title: "", text: 'Please select at least one colleague.' });
+            return false;
+            // alert('Please select at least one colleague.');
+        }
+
+
+    }
+    function DashboardReferralSend() {
+        var MultipleDelete = null;
+        var c = new Array();
+        c = document.getElementsByTagName('input');
+        for (var i = 0; i < c.length; i++) {
+            if (c[i].type == 'checkbox' && c[i].id == 'chkPatient' && c[i].checked == true) {
+                if (MultipleDelete == null) {
+                    MultipleDelete = c[i].value;
+                }
+                else {
+                    swal({ title: "", text: 'Doctor can send referral only one patient' });
+                    return false;
+                }
+            }
+        }
+        if (MultipleDelete == null) {
+            //alert('Please select at least one patient.');
+            swal({ title: "", text: 'Please select at least one patient.' });
+            return false;
+        }
+        var LocationId = $("#dashboardlocationId").val();
+        var colleagueId = document.getElementById('dashboardcolleageId').value;
+        window.location.href = '@Url.Action("Index", "Referrals")?PatientId=' + MultipleDelete + '&ColleagueIds=' + colleagueId.toString() + "&AddressInfoId=" + LocationId;
+    }
+    function SearchDashBoardPatient() {
+        document.getElementById('search_listing_pageindex').value = "1";
+        var GetSearchText = null;
+        if (document.getElementById('txtSearchPatient') == null) {
+            GetSearchText = null;
+        } else if ($('#txtSearchPatient').legnth == 0) {
+            GetSearchText = null;
+        }
+        else {
+            if (document.getElementById('txtSearchPatient').value == "Find patient to refer...") {
+                GetSearchText = null;
+            }
+            else {
+                GetSearchText = document.getElementById('txtSearchPatient').value;
+            }
+
+        }
+        $.ajaxSetup({ async: false });
+        $.post("/Dashboard/SearchDashboardPatientFromPopUp",
+                                    { SearchText: GetSearchText }, function (data) {
+                                        document.getElementById("add_doctor_popup").innerHTML = data;
+                                    });
+        $.ajaxSetup({ async: true });
+        $(".search_listing").bind('scroll', function (event) {
+            if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                var data = SearchDashBoardPatientLI().toString();
+                $(this).append(data);
+            }
+        });
+    }
+
+    function SearchDashBoardPatientLI() {
+        $.ajaxSetup({ async: false });
+        var GetSearchText = null; if (document.getElementById('txtSearchPatient') == null) {
+            GetSearchText = null;
+        } else if ($('#txtSearchPatient').legnth == 0) {
+            GetSearchText = null;
+        }
+        else {
+            if (document.getElementById('txtSearchPatient').value == "Find patient to refer...") {
+                GetSearchText = null;
+            }
+            else {
+                GetSearchText = document.getElementById('txtSearchPatient').value;
+            }
+        }
+        var lidata = '';
+        var strpageindex = document.getElementById('search_listing_pageindex').value;
+        if (strpageindex == "-1") {
+            return "";
+        }
+        else {
+            strpageindex = parseInt(strpageindex) + parseInt(1);
+            document.getElementById('search_listing_pageindex').value = strpageindex;
+            $.post("/Dashboard/DashBoardSearchPatientListForSendReferralPopUpLI",
+                                { SearchText: GetSearchText, pageindex: strpageindex, pagesize: '30' }, function (data) {
+                                    if (data != null) {
+                                        if (data == '' || data == "<center>No Record Found</center>" || data == "<center>No More Record Found</center>") {
+                                            $("#EmptyRecord").empty().html("<center>No more records found</center>");
+                                            document.getElementById('search_listing_pageindex').value = "-1";
+                                        }
+                                    }
+                                    lidata = data.toString();
+                                });
+        }
+        $.ajaxSetup({ async: true });
+        return lidata;
+    }
+    $(function () {
+        $("input.checkbox_add_patient:checkbox").live('click', function (event) {
+            $('ul.search_listing li div').css('border-color', '#C8C8C8');
+            var myInput = $(this);
+            if (myInput.attr('checked')) {
+                var divid = myInput.attr('value');
+                $("input:checked").attr('checked', false);
+                $("#" + divid).css('border-color', '#0890C4');
+                myInput.attr('checked', true);
+            }
+            else {
+                var divid = myInput.attr('value');
+                $("input:checked").attr('checked', false);
+                $("#" + divid).css('border-color', '#C8C8C8');
+                myInput.attr('checked', false);
+            }
+            event.stopPropagation();
+        });
+        $('ul.search_listing li div').live('click', function (event) {
+            $('ul.search_listing li div').css('border-color', '#C8C8C8');
+            var myInput = $('input', $(this))
+            if (myInput.attr('checked')) {
+                var divid = myInput.attr('value');
+                $("#" + divid).css('border-color', '#C8C8C8');
+                $("input:checked").attr('checked', false);
+                myInput.attr('checked', false);
+
+            }
+            else {
+                var divid = myInput.attr('value');
+                $("#" + divid).css('border-color', '#0890C4');
+                $("input:checked").attr('checked', false);
+                
+                myInput.attr('checked', true);
+            }
+            event.stopPropagation();
+        });
+        //DD
+        $("input.checkcolleaguelocation:checkbox").live('click', function (event) {
+            var myInput = $(this);
+            $(".location_each").css('border-color', '#C8C8C8');
+            if (myInput.attr('checked')) {
+                $("input:checked").attr('checked', false);
+                var divid = myInput.attr('value');
+                $("#" + divid).css('border-color', '#0890C4');
+                myInput.attr('checked', true);
+            }
+            else {
+                var divid = myInput.attr('value');
+                $("input:checked").attr('checked', false);
+                $("#" + divid).css('border-color', '#C8C8C8');
+                myInput.attr('checked', false);
+            }
+            event.stopPropagation();
+        });
+        $('div.class_locationcolleagues div').live('click', function (event) {
+            var myInput = $('input', this)
+            $(".location_each").css('border-color', '#C8C8C8');
+            if (myInput.attr('checked')) {
+                var divid = myInput.attr('value');
+                $("input:checked").attr('checked', false);
+                $("#" + divid).css('border-color', '#C8C8C8');
+                myInput.attr('checked', false);
+            }
+            else {
+                var divid = myInput.attr('value');
+                $("#" + divid).css('border-color', '#0890C4');
+                $("input:checked").attr('checked', false);
+                myInput.attr('checked', true);
+            }
+            event.stopPropagation();
+        });
+    });
+</script>
+<input type="hidden" id="search_listing_pageindex" value="1" />
+<input id="pageindexIdDoyouknow" type="hidden" value="1" />
+<input id="pageindexId" type="hidden" value="1" />
+<input type="hidden" id="app-pageindex" value="1" />
+<input type="hidden" id="hdncolleagueid" />
+
+
+<a href="#sendReferral" id="OpenPatientListPopUp" title="Referral" class="frmSendRefferal edit popup-with-form showlightbox"
+   style="display: none;"></a>
+<div id="suggestion_box" class="mfp-hide white-popup-block">
+</div>
+<form action="../Patients/PatientHistory" method="post" id="frmViewPatientHistory">
+    <input type="hidden" name="hdnViewPatientHistory" id="hdnViewPatientHistory" />
+</form>
+<script type="text/javascript">
+    new UISearch(document.getElementById('sb-search'));
+</script>

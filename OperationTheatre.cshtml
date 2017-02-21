@@ -1,0 +1,438 @@
+﻿
+@{
+    Layout = "~/Views/Shared/SiteLayoutInner.cshtml";
+    ViewBag.Title = "Operatory";
+}
+@model NewRecordlinc.Models.Appointment.OperationTheatreModel
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link href="~/Content/Appointment/Css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/Appointment/Css/dev-style.css" rel="stylesheet" />
+<link href="~/Content/Appointment/Css/bootstrap.css" rel="stylesheet" />
+@*<link href="~/Content/Appointment/Css/bootstrap.min.css" rel="stylesheet" />*@
+<style>
+    .sweet-alert {
+        overflow: hidden !important;
+        box-shadow: 0 0 0 0 !important;
+    }
+
+    .showSweetAlert[data-animation=pop] {
+        overflow: hidden !important;
+    }
+
+    body.stop-scrolling {
+        overflow: hidden;
+    }
+
+    .showSweetAlert[data-animation=pop] {
+        -webkit-animation: showSweetAlert 0.3s;
+        animation: showSweetAlert 0.0s;
+    }
+
+    .appmanucss * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        text-decoration: none;
+    }
+
+    .content {
+        float: left;
+        padding: 0;
+        width: 100%;
+    }
+
+    a:hover, a:focus {
+        text-decoration: none !important;
+    }
+
+    .content_base {
+        padding: 0 2px 0 0 !important;
+    }
+
+    input[type="text"], textarea, select {
+        padding: unset;
+        padding-left: 5px;
+    }
+
+    .form-group {
+        margin-bottom: unset;
+    }
+
+    .errormsg {
+        color: red !important;
+        float: left;
+        display: none;
+    }
+
+    .col-xs-12 .page-box p {
+        line-height: 24px !important;
+        ;
+    }
+
+    .devmainpage {
+        height: 100% !important;
+    }
+
+
+    .modal-content {
+        border: 0px solid #999 !important;
+        border: 0px solid rgba(0, 0, 0, .2) !important;
+        -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, .0) !important;
+        box-shadow: 0 0px 0px rgba(0, 0, 0, .0) !important;
+    }
+</style>
+
+<script src="~/Content/js/jquery-1.10.2.js"></script>
+<script src="~/Content/Appointment/Js/bootstrap.min.js" type="text/javascript"></script>
+<div class="content devmainpage" style="height:600px;">
+    <div class="content_base appmanucss">
+        <div class="inner">
+            <div id="tab4" class="tab_content" style="overflow: hidden; border:none">
+                <div class="col-xs-2 col-md-10 pull-left">   </div>
+                <div class="col-xs-3 col-md-2 pull-right" style="text-align: right">
+                    <button class="btn btn-primary btn-sm" onclick="loadSerivcepopup(0)">
+                        Add New Operatory
+                    </button>
+                </div>
+                <br />
+                <br />
+
+                @*<!--custom box  -->
+                            <div class="col-md-12" style="padding:0px;">
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="page-box">
+                                        <p style="font-size: 25px !important;">OP 12121</p>
+                                        <br>
+                                        <p>Location : Huappague  </p>
+
+                                        <div>
+                                            <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(113974, 120957)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                            <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(120957,113974)"><i class="fa fa-trash-o"></i>Delete</a>
+                                        </div>
+                                    </div>
+                                </div><!--box-1-->
+
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="page-box">
+                                        <p style="font-size: 25px !important;">OP 12121</p>
+                                        <br>
+                                        <p>Location : Huappague  </p>
+
+                                        <div>
+                                            <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(113974, 120957)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                            <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(120957,113974)"><i class="fa fa-trash-o"></i>Delete</a>
+                                        </div>
+                                    </div>
+                                </div><!--box-2-->
+
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="page-box">
+                                        <p style="font-size: 25px !important;">OP 12121</p>
+                                        <br>
+                                        <p>Location : Huappague  </p>
+
+                                        <div>
+                                            <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(113974, 120957)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                            <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(120957,113974)"><i class="fa fa-trash-o"></i>Delete</a>
+                                        </div>
+                                    </div>
+                                </div><!--box-3-->
+
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="page-box">
+                                        <p style="font-size: 25px !important;">OP 12121</p>
+                                        <br>
+                                        <p>Location : Huappague  </p>
+
+                                        <div>
+                                            <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(113974, 120957)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                            <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(120957,113974)"><i class="fa fa-trash-o"></i>Delete</a>
+                                        </div>
+                                    </div>
+                                </div><!--box-4-->
+                            </div> <!--Row-1-->
+
+                            <div class="col-md-12" style="padding:0px;">
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="page-box">
+                                        <p style="font-size: 25px !important;">OP 12121</p>
+                                        <br>
+                                        <p>Location : Huappague  </p>
+
+                                        <div>
+                                            <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(113974, 120957)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                            <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(120957,113974)"><i class="fa fa-trash-o"></i>Delete</a>
+                                        </div>
+                                    </div>
+                                </div><!--box-1-->
+
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="page-box">
+                                        <p style="font-size: 25px !important;">OP 12121</p>
+                                        <br>
+                                        <p>Location : Huappague  </p>
+
+                                        <div>
+                                            <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(113974, 120957)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                            <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(120957,113974)"><i class="fa fa-trash-o"></i>Delete</a>
+                                        </div>
+                                    </div>
+                                </div><!--box-2-->
+
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="page-box">
+                                        <p style="font-size: 25px !important;">OP 12121</p>
+                                        <br>
+                                        <p>Location : Huappague  </p>
+
+                                        <div>
+                                            <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(113974, 120957)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                            <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(120957,113974)"><i class="fa fa-trash-o"></i>Delete</a>
+                                        </div>
+                                    </div>
+                                </div><!--box-3-->
+
+                                <div class="col-xs-12 col-md-3">
+                                    <div class="page-box">
+                                        <p style="font-size: 25px !important;">OP 12121</p>
+                                        <br>
+                                        <p>Location : Huappague  </p>
+
+                                        <div>
+                                            <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(113974, 120957)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                            <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(120957,113974)"><i class="fa fa-trash-o"></i>Delete</a>
+                                        </div>
+                                    </div>
+                                </div><!--box-4-->
+                            </div> <!--Row-2-->
+
+                    <!--custom box  end-->*@
+
+                @{
+                    int i = 0;
+                    foreach (var item in Model.TheatreList)
+                    {
+                        if (i == 0)
+                        {
+                            @:<div class='col-md-12' style='padding:0px;'>
+                        }
+                        <div class="col-xs-12 col-md-3">
+                            <div class="page-box">
+                                <p style="font-size: 25px !important;">@item.ResourceName</p>
+                                <br>
+                                <p>
+                                    Location : @(Model
+                                                .LocationList
+                                                .Where(x => x.locationId == item.LocationId)
+                                                .FirstOrDefault()
+                                                .locationName)
+                                </p>
+                                <div>
+                                    <a style="float:left; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="loadSerivcepopup(@item.ApptResourceId, @item.LocationId)"><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                    <a style="float:right; color:#fff; text-decoration:none;" href="javascript:void(0)" onclick="RemoveServceDataFromDB(@item.LocationId,@item.ApptResourceId)"><i class="fa fa-trash-o"></i>Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        if (i == 3)
+                        {
+                            i = 0;
+                            @Html.Raw("</div>");
+                        }
+                        else
+                        {
+                            i++;
+                        }
+
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modelcreateserviceview" data-keyboard="true" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="modelcreateserviceviewbody">
+        </div>
+    </div>
+</div>
+<link href="~/Content/Appointment/Css/jquery.datetimepicker.css" rel="stylesheet" />
+<script src="~/Content/Appointment/Js/jquery.datetimepicker.full.js"></script>
+
+
+
+<script>
+    $(function () {
+        $(document).ajaxError(function (e, xhr) {
+
+            if (xhr.status == 403) {
+                var response = $.parseJSON(xhr.responseText);
+                window.location = response.LogOnUrl;
+            }
+        });
+    });
+    function loadSerivcepopup(resourceId, locationId) {
+        $("#modelcreateserviceviewbody").load("/Appointment/CreateOperationThreatre?locationId=" + locationId + "&resourceId=" + resourceId);
+        $('#modelcreateserviceview').modal('show');
+    }
+
+
+    $(document).ready(function () {
+        $(".Appointent_Operatory").parent("a").addClass("active");
+        $("#AddNewRowService").off("click");
+        $("#AddNewRowService").on("click", AddNewRowServiceFn);
+        $("#ServiceFormPost").off("click");
+        $("#ServiceFormPost").on("click", submitServiceForm);
+        $(document).on('keypress', '.timedureationcls', ValidateTimeFormate);
+        $(document).on('keypress', '.pricecls', ValidatePriceFormate);
+    });
+
+    function ValidateTimeFormate(e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && (e.keyCode < 96 || e.keyCode > 105)) {
+            return false;
+        }
+    }
+
+    function ValidatePriceFormate(e) {
+        // e.which != 114 &&
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57) && (e.keyCode < 96 || e.keyCode > 105) && (e.which != 46)) {
+            return false;
+        }
+    }
+
+    function AddNewRowServiceFn() {
+        var rowCount = $('#Servicetble tbody tr').length + 1;
+        var rowIndex = parseInt(rowCount - 2, 10);
+        $('#Servicetble tbody tr:last').after('<tr id="tr_' + rowCount + '"><td><input type="text" class ="clsService" name="AppointmentServices[' + rowIndex + '].ServiceType" value="" /></td><td><input type="text" class = "timedureationcls" name="AppointmentServices[' + rowIndex + '].TimeDuration" placeholder="Time in Min" value="" /></td><td><input type="text" name="AppointmentServices[' + rowIndex + '].Price" value="" /></td><td>&nbsp;&nbsp;&nbsp;<a href="#" onclick="RemoveServiceRow(' + rowCount + ');">Remove</a></td></tr>');
+    }
+
+    function RemoveServiceRow(r) {
+        $("#tr_" + r + "").remove();
+    }
+
+    function RemoveServceDataFromDB(locationId, resourceId) {
+        swal({
+            title: "",
+            text: "Are you sure you want to remove ?",
+            type: "warning",
+            showCancelButton: true,
+            //confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+        },
+function (isConfirm) {
+    if (isConfirm) {
+        var Url = '@Url.Action("DeleteOperationTheatre", "Appointment")';
+        $.ajax({
+            url: Url,
+            data: {
+                locationId: locationId,
+                resourceId: resourceId
+            },
+            type: "post",
+            success: function (data) {
+                if (data.MsgType !== '' && data.Message) {
+                    swal({
+                        title: data.MsgType == 1 ? "Successfully" : "",
+                        text: data.Message,
+                        type: data.MsgType == 0 ? "error" : "",
+                        showConfirmButton: true
+                    });
+                    if (data.MsgType == 1) {
+                        window.location.reload();
+                    }
+                }
+            }
+        });
+    }
+});
+        @*if (confirm("Are you sure you want to delete!")) {
+            var Url = '@Url.Action("DeleteService", "Appointment")?appointmentServiceId=' + ServiceId;
+            $.ajax({
+                url: Url,
+                type: "post",
+                success: function (data) {
+                    alert("Service deleted successfully!");
+                    LoadServices();
+                }
+            });
+        }*@
+    }
+
+    function submitServiceForm() {
+
+        var flag = true;
+        $('#Servicetble tbody tr').each(function () {
+            var servicename = $(this).find('.clsService').val();
+            //alert(servicename);
+
+            if (servicename == '' || servicename == null && servicename == 'undefined') {
+                swal({ title: "", text: 'Please Enter Services Name.' });
+                //alert('Please Enter Services Name');
+                $(this).find('.clsService').focus();
+                flag = false;
+                return false;
+            }
+            var timedureation = $(this).find('.timedureationcls').val();
+            if (timedureation == '' || timedureation == null && timedureation == 'undefined') {
+                swal({ title: "", text: 'Please Enter Time Duretion.' });
+                //alert('Please Enter Time Duretion');
+                $(this).find('.timedureationcls').focus();
+                flag = false;
+                return false;
+            }
+            var reminder = parseInt(timedureation, 10) % 15
+            if (reminder == 'NaN' || reminder > 0) {
+                swal({ title: "", text: 'Time duration should be like 15 30 45 60 minutes only.' });
+                // alert("Time duration should be like 15 30 45 60 minutes only!");
+                flag = false;
+                return false;
+            }
+        });
+        if (!flag) {
+            return flag;
+        }
+
+
+        $('#Servicetble tbody tr').each(function (i) {
+            var servicename1 = $.trim($(this).find('.clsService').val()).toLowerCase();
+
+            $('#Servicetble tbody tr').each(function (j) {
+                var servicename2 = $.trim($(this).find('.clsService').val()).toLowerCase();
+
+                if (i != j && i != 0 && j != 0) {
+                    if (servicename1 == servicename2) {
+                        //alert("Service name " + servicename1 + " can not be duplicate, check row " + i + " and " + j + "");
+                        swal({ title: "", text: "Service name " + servicename1 + " can not be duplicate, check row " + i + " and " + j + "", type: 'error' });
+                        flag = false;
+                        return false;
+                    }
+                }
+            });
+            if (!flag) {
+                return flag;
+            }
+        });
+
+        if (!flag) {
+            return flag;
+        }
+
+        var frmdata = $("#Servicefrm").serialize()
+        var Url = '@Url.Action("Services", "Appointment")';
+        $.ajax({
+            url: Url,
+            type: "post",
+            data: frmdata,
+            success: function (data) {
+                swal("", "Services updated successfully!", "success");
+                //alert("Services updated successfully!")
+                $(".mfp-close").trigger("click");
+            }
+        });
+    }
+
+
+
+</script>
